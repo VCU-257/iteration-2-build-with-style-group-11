@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Item Page – Flow B</title>
+
+  <!--
+    Bootswatch Lux – local file (GA8 strategy).
+    This file already: imports Nunito Sans via @import, sets body font-weight 300,
+    and defines btn-primary as #1a1a1a. No separate Google Fonts link needed.
+  -->
+  <link rel="stylesheet" href="bootstrap.css">
+  <!-- Bootstrap Icons (GA8 icon library) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    /*
+     * GA8 Color overrides
+     * -------------------
+     * Lux's btn-primary is already #1a1a1a — no override needed there.
+     * Lux's btn-secondary is WHITE (#fff) by default, so we override it
+     * to our GA8 secondary color #058531 (green).
+     */
+    .btn-secondary {
+      --bs-btn-color: #fff;
+      --bs-btn-bg: #058531;
+      --bs-btn-border-color: #058531;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #046a27;
+      --bs-btn-hover-border-color: #046a27;
+      --bs-btn-active-color: #fff;
+      --bs-btn-active-bg: #046a27;
+      --bs-btn-active-border-color: #046a27;
+    }
+    .btn-outline-secondary {
+      --bs-btn-color: #058531;
+      --bs-btn-border-color: #058531;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #058531;
+      --bs-btn-hover-border-color: #058531;
+    }
+
+    /* ── Product image placeholder ── */
+    .product-img-placeholder {
+      cursor: pointer;
+      background-color: #d6d6d6;
+      height: 320px;
+      border-radius: 0.5rem;
+      transition: opacity 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+    }
+    .product-img-placeholder:hover {
+      opacity: 0.8;
+      outline: 3px solid #1a1a1a;
+    }
+
+    /* ── Wishlist button toggled state ── */
+    #wishlistBtn.wishlisted {
+      background-color: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+    }
+
+    /* ── Star rating color ── */
+    .star-rating { color: #ffc107; }
+
+    /* ── Footer (GA8 Table 2: #343A40 bg, #FFF text) ── */
+    footer { background-color: #343a40; }
+    footer a { color: #dee2e6; text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- ── Navbar: compact to save screen space (Critique Task 2) ── -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-1">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold small" href="index.html"
+         style="color:#1a1a1a; letter-spacing:1px;">FLOW B</a>
+
+      <!-- Mobile hamburger (Critique Task 2: proper collapse on small screens) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mainNav" aria-controls="mainNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-0 small">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold active" href="catalog.html">CATALOG</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="wishlist.html">WISHLIST</a></li>
+          <li class="nav-item"><a class="nav-link" href="catalog.html#deals">DEALS</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+          <div class="input-group input-group-sm">
+            <!-- GA8: bi-search icon on search submit -->
+            <a class="btn btn-outline-secondary btn-sm" href="catalog.html" aria-label="Search">
+              <i class="bi bi-search"></i>
+            </a>
+            <input type="text" class="form-control form-control-sm" placeholder="Search…">
+          </div>
+          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="wishlist.html" aria-label="Wishlist">
+            <i class="bi bi-heart"></i>
+          </a>
+          <!-- GA8: bi-bag-heart-fill for cart -->
+          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="Cart.html" aria-label="Cart">
+            <i class="bi bi-bag-heart-fill"></i>
+          </a>
+          <!-- GA8: bi-person-circle for account -->
+          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="#" aria-label="Account">
+            <i class="bi bi-person-circle"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ── -->
+  <main class="flex-grow-1 py-4">
+    <div class="container">
+
+      <!-- Back button on every screen (Critique Task 3) -->
+      <a href="catalog.html" class="btn btn-sm btn-outline-secondary mb-3">
+        <i class="bi bi-arrow-left me-1"></i>Back to Catalog
+      </a>
+
+      <div class="row g-4">
+
+        <!-- Left: product image -->
+        <div class="col-12 col-md-6">
+          <!--
+            Interaction 1: Image Modal (Dynamic UI Element)
+            Clicking the image opens a Bootstrap modal with a full-size view.
+            data-bs-toggle and data-bs-target wire it to the modal below.
+          -->
+          <div class="product-img-placeholder"
+               data-bs-toggle="modal"
+               data-bs-target="#fullViewModal"
+               role="button"
+               aria-label="Click to view full size image">
+            <span class="text-center">
+              <i class="bi bi-image fs-1 d-block mb-1"></i>
+              <small>Click to expand</small>
+            </span>
+          </div>
+          <!-- Thumbnail strip -->
+          <div class="d-flex gap-2 mt-2">
+            <div class="bg-secondary bg-opacity-25 rounded flex-shrink-0"
+                 style="width:64px;height:48px;"></div>
+            <div class="bg-secondary bg-opacity-25 rounded flex-shrink-0"
+                 style="width:64px;height:48px;"></div>
+            <div class="bg-secondary bg-opacity-25 rounded flex-shrink-0"
+                 style="width:64px;height:48px;"></div>
+          </div>
+        </div>
+
+        <!-- Right: product info -->
+        <div class="col-12 col-md-6">
+          <h2 class="mb-1">Item Name</h2>
+
+          <!-- Star rating icons (GA8 Table 4: bi-star-fill, bi-star-half, bi-star) -->
+          <div class="star-rating mb-2" aria-label="Rating: 4.5 out of 5">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <span class="text-muted small ms-1">(42 reviews)</span>
+          </div>
+
+          <h3 class="mb-3" style="color:#058531;">$xx.xx</h3>
+
+          <div class="card mb-3 border-0 bg-light">
+            <div class="card-body py-2">
+              <h6 class="card-title mb-1">Description</h6>
+              <p class="card-text small mb-0">
+                This is the item description. It provides details about the
+                product, its features, and what makes it stand out for casual gamers.
+              </p>
+            </div>
+          </div>
+
+          <div class="card mb-3 border-0 bg-light">
+            <div class="card-body py-2">
+              <h6 class="card-title mb-1">Specifications</h6>
+              <ul class="small mb-0 ps-3">
+                <li>Spec 1</li>
+                <li>Spec 2</li>
+                <li>Spec 3</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Primary actions -->
+          <div class="d-flex flex-wrap gap-2 mb-2">
+            <a class="btn btn-primary" href="Cart.html">
+              <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
+            </a>
+            <a class="btn btn-secondary" href="checkout.html">Buy Now</a>
+          </div>
+
+          <!-- Secondary actions -->
+          <div class="d-flex flex-wrap gap-2">
+            <!--
+              Interaction 2: Wishlist Toggle – State Simulation
+              Button text and icon swap between "Add to Wishlist" and "In Wishlist ✓"
+              on each click. The JS at the bottom handles this with no page reload.
+            -->
+            <button id="wishlistBtn" class="btn btn-outline-secondary">
+              <i class="bi bi-heart me-1" id="wishlistIcon"></i>
+              <span id="wishlistLabel">Add to Wishlist</span>
+            </button>
+            <a class="btn btn-outline-secondary" href="compare.html">
+              <i class="bi bi-arrow-left-right me-1"></i>Compare
+            </a>
+          </div>
+        </div>
+      </div><!-- /row -->
+
+      <!-- Reviews section -->
+      <div class="card mt-4">
+        <div class="card-header">Customer Reviews</div>
+        <div class="card-body text-muted small">
+          No reviews yet. Be the first!
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ── Footer (GA8 Table 2: #343A40 bg, #FFF text) ── -->
+  <footer class="py-3 mt-auto">
+    <div class="container-fluid px-4">
+      <a href="#">Customer Service</a>
+      <a href="#" class="ms-4">Privacy Policy</a>
+      <a href="#" class="ms-4">About Us</a>
+    </div>
+  </footer>
+
+  <!-- ── Interaction 1: Full-Size Image Modal ── -->
+  <div class="modal fade" id="fullViewModal" tabindex="-1"
+       aria-labelledby="fullViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title" id="fullViewModalLabel">Item Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center p-3">
+          <div class="bg-secondary bg-opacity-25 d-flex justify-content-center
+                       align-items-center rounded" style="height:420px;">
+            <span class="text-muted">
+              <i class="bi bi-image fs-1 d-block mb-1"></i>
+              Full Size Image
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /*
+     * Interaction 2: Wishlist Toggle – State Simulation
+     * --------------------------------------------------
+     * Tracks a boolean `wishlisted`. On each click, it flips the state and
+     * updates the button icon (bi-heart ↔ bi-heart-fill), the label text,
+     * and the button's visual style. No page reload happens.
+     */
+    const wishlistBtn   = document.getElementById('wishlistBtn');
+    const wishlistIcon  = document.getElementById('wishlistIcon');
+    const wishlistLabel = document.getElementById('wishlistLabel');
+    let wishlisted = false;
+
+    wishlistBtn.addEventListener('click', () => {
+      wishlisted = !wishlisted;
+
+      if (wishlisted) {
+        // Item is now in wishlist
+        wishlistIcon.className  = 'bi bi-heart-fill me-1';
+        wishlistLabel.textContent = 'In Wishlist \u2713';
+        wishlistBtn.classList.add('wishlisted');
+      } else {
+        // Item removed from wishlist
+        wishlistIcon.className  = 'bi bi-heart me-1';
+        wishlistLabel.textContent = 'Add to Wishlist';
+        wishlistBtn.classList.remove('wishlisted');
+      }
+    });
+  </script>
+
+</body>
+</html>
