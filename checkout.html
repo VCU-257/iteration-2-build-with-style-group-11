@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="./styles.css" rel="stylesheet">
+</head>
+<body class="bg-white d-flex flex-column min-vh-100">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg app-navbar navbar-dark">
+    <div class="container-fluid">
+      <div class="navbar-collapse">
+        <ul class="navbar-nav me-auto mb-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="catalog.html">CATALOG</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="wishlist.html">WISHLIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="deals.html">DEALS</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <div class="input-group">
+            <button class="btn btn-outline-secondary">
+              <i class="bi bi-search"></i>
+            </button>
+            <input type="text" class="form-control" placeholder="search">
+          </div>
+          <a class="btn btn-link nav-icon-btn" href="Cart.html" aria-label="Cart">
+            <i class="bi bi-bag-heart-fill"></i>
+          </a>
+          <button class="btn btn-link nav-icon-btn" type="button" aria-label="User profile">
+            <i class="bi bi-person-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="container mt-4 flex-grow-1">
+    <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+      <h3 class="mb-0">Checkout</h3>
+      <a class="btn btn-outline-secondary btn-sm" href="Cart.html">
+        <i class="bi bi-arrow-left me-1"></i>
+        Back to cart
+      </a>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-lg-7">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Shipping information</h5>
+            <form id="checkoutForm" class="row g-3" novalidate>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="firstName">First name</label>
+                <input id="firstName" class="form-control" type="text" placeholder="First name" autocomplete="given-name" required>
+                <div class="invalid-feedback">Please enter your first name.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="lastName">Last name</label>
+                <input id="lastName" class="form-control" type="text" placeholder="Last name" autocomplete="family-name" required>
+                <div class="invalid-feedback">Please enter your last name.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="address1">Address</label>
+                <input id="address1" class="form-control" type="text" placeholder="Street address" autocomplete="shipping street-address" required>
+                <div class="invalid-feedback">Please enter a street address.</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="city">City</label>
+                <input id="city" class="form-control" type="text" placeholder="City" autocomplete="shipping address-level2" required>
+                <div class="invalid-feedback">Please enter a city.</div>
+              </div>
+              <div class="col-12 col-md-3">
+                <label class="form-label" for="state">State</label>
+                <input id="state" class="form-control" type="text" placeholder="State" autocomplete="shipping address-level1" required>
+                <div class="invalid-feedback">Please enter a state/province.</div>
+              </div>
+              <div class="col-12 col-md-3">
+                <label class="form-label" for="zip">Zip</label>
+                <input id="zip" class="form-control" type="text" placeholder="Zip" inputmode="numeric" autocomplete="shipping postal-code" required pattern="^[0-9A-Za-z -]{3,10}$">
+                <div class="invalid-feedback">Please enter a valid zip/postal code.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="email">Email</label>
+                <input id="email" class="form-control" type="email" placeholder="you@example.com" autocomplete="email" required>
+                <div class="invalid-feedback">Please enter a valid email.</div>
+              </div>
+              <div class="col-12">
+                <div class="alert alert-info d-flex align-items-start gap-2 mb-0" role="note">
+                  <i class="bi bi-info-circle mt-1"></i>
+                  <div class="small">This is a prototype checkout. No payment is collected.</div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-5">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Order summary</h5>
+            <div class="d-flex justify-content-between">
+              <span>Items</span>
+              <span id="summaryItems">$0.00</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Shipping</span>
+              <span id="summaryShipping">$0.00</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between fw-bold">
+              <span>Total</span>
+              <span id="summaryTotal">$0.00</span>
+            </div>
+            <div class="d-grid mt-3">
+              <button id="placeOrderBtn" class="btn btn-success btn-lg">
+                <i class="bi bi-bag-check me-1"></i>
+                Place order
+              </button>
+            </div>
+            <div id="checkoutAlertHost" class="mt-3" aria-live="polite" aria-atomic="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer mt-auto">
+    <div class="container py-3">
+      <div class="d-flex gap-4">
+        <p class="mb-0">Customer Service</p>
+        <p class="mb-0">Privacy Policy</p>
+        <p class="mb-0">About US</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Order placed modal -->
+  <div class="modal fade" id="orderPlacedModal" tabindex="-1" aria-labelledby="orderPlacedTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderPlacedTitle">Order placed</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex gap-2 align-items-start">
+            <i class="bi bi-check-circle-fill text-success mt-1"></i>
+            <div>
+              <div class="fw-semibold">Thanks for your purchase!</div>
+              <div class="text-muted small">Your cart has been cleared for this prototype.</div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a class="btn btn-primary" href="Cart.html">Return to cart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./checkout.js"></script>
+</body>
+</html>

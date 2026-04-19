@@ -1,0 +1,71 @@
+/* GA8 typography */
+:root {
+  --app-font: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+body {
+  font-family: var(--app-font);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--app-font);
+  font-weight: 600;
+}
+
+p, a, span, li, input, button, label, small {
+  font-weight: 300;
+}
+
+/* GA8 palette helpers */
+.app-navbar {
+  background: #1a1a1a;
+}
+
+.app-navbar .nav-link,
+.app-navbar .navbar-brand {
+  color: #ffffff;
+}
+
+.app-navbar .nav-link.active,
+.app-navbar .nav-link:focus,
+.app-navbar .nav-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.app-footer {
+  background: #343a40;
+  color: #ffffff;
+}
+
+/* Navbar icon buttons (no circle) */
+.nav-icon-btn {
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.nav-icon-btn i {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.nav-icon-btn:hover,
+.nav-icon-btn:focus-visible {
+  color: #ffffff;
+  opacity: 0.9;
+}
+
+/* Small UX polish for Cart/Checkout */
+.table > :not(caption) > * > * {
+  vertical-align: middle;
+}
+
+.cart-qty {
+  width: 7.5rem;
+}
+
