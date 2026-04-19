@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wishlist – Flow B</title>
+
+  <!--
+    Bootswatch Lux – local file (GA8 strategy).
+    This file already: imports Nunito Sans via @import, sets body font-weight 300,
+    and defines btn-primary as #1a1a1a. No separate Google Fonts link needed.
+  -->
+  <link rel="stylesheet" href="bootstrap.css">
+  <!-- Bootstrap Icons (GA8 icon library) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    /*
+     * GA8 Color overrides
+     * -------------------
+     * Lux's btn-primary is already #1a1a1a — no override needed there.
+     * Lux's btn-secondary is WHITE (#fff) by default, so we override it
+     * to our GA8 secondary color #058531 (green).
+     */
+    .btn-secondary {
+      --bs-btn-color: #fff;
+      --bs-btn-bg: #058531;
+      --bs-btn-border-color: #058531;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #046a27;
+      --bs-btn-hover-border-color: #046a27;
+      --bs-btn-active-color: #fff;
+      --bs-btn-active-bg: #046a27;
+      --bs-btn-active-border-color: #046a27;
+    }
+    .btn-outline-secondary {
+      --bs-btn-color: #058531;
+      --bs-btn-border-color: #058531;
+      --bs-btn-hover-color: #fff;
+      --bs-btn-hover-bg: #058531;
+      --bs-btn-hover-border-color: #058531;
+    }
+
+    /* ── Wishlist row hover ── */
+    .wishlist-row {
+      transition: background-color 0.2s;
+    }
+    .wishlist-row:hover {
+      background-color: #d8d8d8 !important;
+    }
+
+    /*
+     * z-index-top: keeps buttons clickable on top of the stretched-link overlay.
+     * The stretched-link <a> fills the entire .position-relative parent, so
+     * interactive children need a higher z-index to stay clickable.
+     */
+    .z-index-top {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ── Remove animation: slide up + fade out ── */
+    .removing {
+      animation: slideUp 0.3s ease forwards;
+    }
+    @keyframes slideUp {
+      to { opacity: 0; transform: translateY(-12px); max-height: 0; margin: 0; padding: 0; overflow: hidden; }
+    }
+
+    /* ── Empty state ── */
+    #emptyState { display: none; }
+
+    /* ── Footer (GA8 Table 2: #343A40 bg, #FFF text) ── */
+    footer { background-color: #343a40; }
+    footer a { color: #dee2e6; text-decoration: none; }
+    footer a:hover { color: #fff; }
+  </style>
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- ── Navbar: compact to save screen space (Critique Task 2) ── -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-1">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold small" href="index.html"
+         style="color:#1a1a1a; letter-spacing:1px;">FLOW B</a>
+
+      <!-- Mobile hamburger -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mainNav" aria-controls="mainNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-0 small">
+          <li class="nav-item"><a class="nav-link" href="index.html">HOME</a></li>
+          <li class="nav-item"><a class="nav-link" href="catalog.html">CATALOG</a></li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold active" href="wishlist.html">WISHLIST</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="catalog.html#deals">DEALS</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+          <div class="input-group input-group-sm">
+            <!-- GA8: bi-search icon on search submit -->
+            <a class="btn btn-outline-secondary btn-sm" href="catalog.html" aria-label="Search">
+              <i class="bi bi-search"></i>
+            </a>
+            <input type="text" class="form-control form-control-sm" placeholder="Search…">
+          </div>
+          <!-- GA8: bi-bag-heart-fill for cart -->
+          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="Cart.html" aria-label="Cart">
+            <i class="bi bi-bag-heart-fill"></i>
+          </a>
+          <!-- GA8: bi-person-circle for account -->
+          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="#" aria-label="Account">
+            <i class="bi bi-person-circle"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Main Content ── -->
+  <main class="flex-grow-1 py-4">
+    <div class="container">
+
+      <!-- Back button on every screen (Critique Task 3) -->
+      <a href="index.html" class="btn btn-sm btn-outline-secondary mb-3">
+        <i class="bi bi-arrow-left me-1"></i>Back to Home
+      </a>
+
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h4 class="mb-0">My Wishlist</h4>
+        <span class="text-muted small" id="itemCount">4 items</span>
+      </div>
+
+      <!-- Wishlist item list -->
+      <div id="wishlistContainer">
+
+        <!--
+          Each .wishlist-row is a self-contained item card.
+          The X button (Interaction 3 below) targets its closest .wishlist-row
+          and removes it from the DOM with an animation.
+        -->
+
+        <!-- Item 1 -->
+        <div class="wishlist-row d-flex align-items-center bg-light rounded-3
+                    p-3 mb-3 position-relative border">
+          <a href="description.html" class="stretched-link"></a>
+
+          <div class="bg-secondary bg-opacity-25 rounded d-flex justify-content-center
+                       align-items-center flex-shrink-0 text-center"
+               style="width:110px; height:80px;">
+            <small class="text-muted">Picture<br>of Item</small>
+          </div>
+
+          <div class="flex-grow-1 px-3">
+            <p class="mb-0 fw-semibold">Item Name 1</p>
+            <p class="mb-0 small text-muted">Short description of item</p>
+          </div>
+
+          <div class="d-flex align-items-center gap-3 flex-shrink-0 z-index-top">
+            <p class="mb-0 fw-bold" style="color:#058531;">$x1</p>
+            <div class="d-flex flex-column gap-1">
+              <a class="btn btn-secondary btn-sm rounded-pill" href="checkout.html">
+                Buy Now
+              </a>
+              <button class="btn btn-primary btn-sm rounded-pill">
+                <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <!-- X remove button -->
+          <button class="btn btn-sm btn-close position-absolute top-0 end-0 m-2
+                         z-index-top remove-btn"
+                  aria-label="Remove item"></button>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="wishlist-row d-flex align-items-center bg-light rounded-3
+                    p-3 mb-3 position-relative border">
+          <a href="description.html" class="stretched-link"></a>
+          <div class="bg-secondary bg-opacity-25 rounded d-flex justify-content-center
+                       align-items-center flex-shrink-0 text-center"
+               style="width:110px; height:80px;">
+            <small class="text-muted">Picture<br>of Item</small>
+          </div>
+          <div class="flex-grow-1 px-3">
+            <p class="mb-0 fw-semibold">Item Name 2</p>
+            <p class="mb-0 small text-muted">Short description of item</p>
+          </div>
+          <div class="d-flex align-items-center gap-3 flex-shrink-0 z-index-top">
+            <p class="mb-0 fw-bold" style="color:#058531;">$x2</p>
+            <div class="d-flex flex-column gap-1">
+              <a class="btn btn-secondary btn-sm rounded-pill" href="checkout.html">Buy Now</a>
+              <button class="btn btn-primary btn-sm rounded-pill">
+                <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-close position-absolute top-0 end-0 m-2
+                         z-index-top remove-btn" aria-label="Remove item"></button>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="wishlist-row d-flex align-items-center bg-light rounded-3
+                    p-3 mb-3 position-relative border">
+          <a href="description.html" class="stretched-link"></a>
+          <div class="bg-secondary bg-opacity-25 rounded d-flex justify-content-center
+                       align-items-center flex-shrink-0 text-center"
+               style="width:110px; height:80px;">
+            <small class="text-muted">Picture<br>of Item</small>
+          </div>
+          <div class="flex-grow-1 px-3">
+            <p class="mb-0 fw-semibold">Item Name 3</p>
+            <p class="mb-0 small text-muted">Short description of item</p>
+          </div>
+          <div class="d-flex align-items-center gap-3 flex-shrink-0 z-index-top">
+            <p class="mb-0 fw-bold" style="color:#058531;">$x3</p>
+            <div class="d-flex flex-column gap-1">
+              <a class="btn btn-secondary btn-sm rounded-pill" href="checkout.html">Buy Now</a>
+              <button class="btn btn-primary btn-sm rounded-pill">
+                <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-close position-absolute top-0 end-0 m-2
+                         z-index-top remove-btn" aria-label="Remove item"></button>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="wishlist-row d-flex align-items-center bg-light rounded-3
+                    p-3 mb-3 position-relative border">
+          <a href="description.html" class="stretched-link"></a>
+          <div class="bg-secondary bg-opacity-25 rounded d-flex justify-content-center
+                       align-items-center flex-shrink-0 text-center"
+               style="width:110px; height:80px;">
+            <small class="text-muted">Picture<br>of Item</small>
+          </div>
+          <div class="flex-grow-1 px-3">
+            <p class="mb-0 fw-semibold">Item Name 4</p>
+            <p class="mb-0 small text-muted">Short description of item</p>
+          </div>
+          <div class="d-flex align-items-center gap-3 flex-shrink-0 z-index-top">
+            <p class="mb-0 fw-bold" style="color:#058531;">$x4</p>
+            <div class="d-flex flex-column gap-1">
+              <a class="btn btn-secondary btn-sm rounded-pill" href="checkout.html">Buy Now</a>
+              <button class="btn btn-primary btn-sm rounded-pill">
+                <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
+              </button>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-close position-absolute top-0 end-0 m-2
+                         z-index-top remove-btn" aria-label="Remove item"></button>
+        </div>
+
+      </div><!-- /wishlistContainer -->
+
+      <!-- Empty state (shown by JS when all items are removed) -->
+      <div id="emptyState" class="text-center py-5 text-muted">
+        <i class="bi bi-heart fs-1 d-block mb-2"></i>
+        <p class="mb-3">Your wishlist is empty.</p>
+        <a href="catalog.html" class="btn btn-primary">Browse Catalog</a>
+      </div>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ── Footer (GA8 Table 2: #343A40 bg, #FFF text) ── -->
+  <footer class="py-3 mt-auto">
+    <div class="container-fluid px-4">
+      <a href="#">Customer Service</a>
+      <a href="#" class="ms-4">Privacy Policy</a>
+      <a href="#" class="ms-4">About Us</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /*
+     * Interaction 3: Remove Item from Wishlist – State Simulation
+     * ------------------------------------------------------------
+     * Each X button (class="remove-btn") uses event delegation: one listener
+     * on the container catches all clicks. When clicked, it finds the closest
+     * .wishlist-row, plays a CSS slide-up animation, then removes the element
+     * from the DOM. It also updates the item count display. If the list becomes
+     * empty, it hides the container and shows the #emptyState message.
+     *
+     * No page reload happens at any point.
+     */
+    const container  = document.getElementById('wishlistContainer');
+    const emptyState = document.getElementById('emptyState');
+    const itemCount  = document.getElementById('itemCount');
+
+    function updateCount() {
+      const remaining = container.querySelectorAll('.wishlist-row').length;
+      itemCount.textContent = remaining + (remaining === 1 ? ' item' : ' items');
+      if (remaining === 0) {
+        container.style.display = 'none';
+        emptyState.style.display = 'block';
+      }
+    }
+
+    // Event delegation: one listener handles all current and future remove buttons
+    container.addEventListener('click', (e) => {
+      const btn = e.target.closest('.remove-btn');
+      if (!btn) return;                          // click wasn't on a remove button
+
+      e.preventDefault();                        // stop stretched-link navigation
+      e.stopPropagation();
+
+      const row = btn.closest('.wishlist-row');
+      row.classList.add('removing');             // trigger CSS animation
+
+      // Remove from DOM after animation completes (300ms matches CSS duration)
+      row.addEventListener('animationend', () => {
+        row.remove();
+        updateCount();
+      });
+    });
+  </script>
+
+</body>
+</html>
