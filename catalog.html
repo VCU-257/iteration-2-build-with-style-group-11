@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalog</title>
+  <!-- Bootswatch Lux Theme -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.0/dist/lux/bootstrap.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+  <!-- Nunito Sans Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body, p, a, li, span, div {
+      font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 300;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 600;
+    }
+
+    /* Primary color overrides: #1A1A1A bg / #FFFFFF text */
+    .btn-primary {
+      background-color: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background-color: #333333;
+      border-color: #333333;
+      color: #ffffff;
+    }
+
+    /* Secondary color overrides: #058531 bg / #FFFFFF text */
+    .btn-secondary {
+      background-color: #058531;
+      border-color: #058531;
+      color: #ffffff;
+    }
+    .btn-secondary:hover {
+      background-color: #046b27;
+      border-color: #046b27;
+      color: #ffffff;
+    }
+
+    /* Navbar styled with primary color (#1A1A1A) */
+    .navbar {
+      background-color: #1a1a1a !important;
+    }
+    .navbar .nav-link {
+      color: rgba(255, 255, 255, 0.75) !important;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 0.85rem;
+    }
+    .navbar .nav-link:hover,
+    .navbar .nav-link.active {
+      color: #ffffff !important;
+    }
+    .navbar .btn-outline-secondary {
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.4);
+    }
+    .navbar .btn-outline-secondary:hover {
+      background-color: rgba(255,255,255,0.1);
+      color: #ffffff;
+      border-color: #ffffff;
+    }
+    .navbar .form-control {
+      background-color: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.3);
+      color: #ffffff;
+    }
+    .navbar .form-control::placeholder {
+      color: rgba(255,255,255,0.5);
+    }
+    .navbar .form-control:focus {
+      background-color: rgba(255,255,255,0.15);
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.6);
+      box-shadow: none;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      background-color: #f4f4f4 !important;
+      border-right: 1px solid #e0e0e0;
+    }
+    #sidebar .fw-bold {
+      color: #1a1a1a;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .filter-bar {
+      background-color: #d0d0d0;
+      border-radius: 4px;
+      height: 14px;
+    }
+
+    /* Product cards */
+    .product-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .product-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      transform: translateY(-2px);
+    }
+    .product-card .card-img-top {
+      background-color: #d8d8d8;
+      height: 140px;
+      object-fit: cover;
+    }
+    .product-card .card-img-placeholder {
+      background-color: #d8d8d8;
+      height: 140px;
+    }
+    .product-card .card-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1a1a1a;
+      margin-bottom: 2px;
+    }
+    .product-card .card-text {
+      font-size: 0.78rem;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .product-card .card-price {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #058531;
+    }
+    .product-card .card-stars {
+      color: #058531;
+      font-size: 0.7rem;
+    }
+    .product-card .btn-cart {
+      background-color: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #ffffff;
+      font-size: 0.75rem;
+      padding: 3px 10px;
+      border-radius: 50rem;
+    }
+    .product-card .btn-cart:hover {
+      background-color: #058531;
+      border-color: #058531;
+    }
+
+    /* Deals banner */
+    .deals-banner {
+      background-color: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      border-radius: 6px;
+      height: 120px;
+    }
+
+    /* Section heading */
+    .section-heading {
+      color: #1a1a1a;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  </style>
+</head>
+<body class="vh-100 d-flex flex-column overflow-hidden" style="background-color: #ffffff; color: #1a1a1a;">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg border-bottom">
+    <div class="container-fluid">
+      <div class="navbar-collapse">
+        <div class="d-flex align-items-center me-3">
+          <button class="btn btn-outline-secondary p-1" style="line-height:1; font-size:0.8rem;" onclick="document.getElementById('sidebar').classList.toggle('d-none')" aria-label="Toggle Filters">
+            <i class="bi bi-layout-sidebar" style="font-size:0.95rem;"></i>
+          </button>
+        </div>
+        <ul class="navbar-nav me-auto mb-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold active" aria-current="page" href="catalog.html">CATALOG</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="wishlist.html">WISHLIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#deals">DEALS</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <div class="input-group">
+            <a class="btn btn-outline-secondary" href="catalog.html">
+              <i class="bi bi-search"></i>
+            </a>
+            <input type="text" class="form-control" placeholder="search">
+          </div>
+          <a class="btn btn-outline-secondary rounded-circle" href="Cart.html" aria-label="Cart">
+            <i class="bi bi-bag-heart-fill"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="d-flex flex-grow-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="p-3 overflow-y-auto" style="width: 200px; min-width: 200px; background-color: #f4f4f4; border-right: 1px solid #e0e0e0;">
+
+      <div class="fw-bold mb-3" style="color: #1a1a1a; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; border-bottom: 2px solid #058531; padding-bottom: 6px;">Filters</div>
+
+      <!-- Price Range -->
+      <div class="mb-4">
+        <div class="fw-semibold mb-2" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #1a1a1a;">Price Range</div>
+        <div class="d-flex justify-content-between mb-1" style="font-size: 0.75rem; color: #555;">
+          <span>$0</span><span id="priceDisplay">$100</span>
+        </div>
+        <input type="range" class="form-range" id="priceRange" min="0" max="100" value="100" step="5"
+          style="accent-color: #058531;">
+        <div class="d-flex gap-1 mt-2">
+          <input type="number" class="form-control form-control-sm" id="priceMin" placeholder="Min" min="0" max="100" value="0" style="font-size:0.72rem;">
+          <input type="number" class="form-control form-control-sm" id="priceMax" placeholder="Max" min="0" max="100" value="100" style="font-size:0.72rem;">
+        </div>
+      </div>
+
+      <!-- Device Type -->
+      <div class="mb-4">
+        <div class="fw-semibold mb-2" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #1a1a1a;">Device Type</div>
+        <div class="d-flex flex-column gap-1" style="font-size: 0.8rem;">
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-device" value="pc" checked style="accent-color: #058531;"> PC
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-device" value="playstation" checked style="accent-color: #058531;"> PlayStation
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-device" value="xbox" checked style="accent-color: #058531;"> Xbox
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-device" value="nintendo" checked style="accent-color: #058531;"> Nintendo Switch
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-device" value="mobile" checked style="accent-color: #058531;"> Mobile
+          </label>
+        </div>
+      </div>
+
+      <!-- Compatibility -->
+      <div class="mb-4">
+        <div class="fw-semibold mb-2" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #1a1a1a;">Compatibility</div>
+        <div class="d-flex flex-column gap-1" style="font-size: 0.8rem;">
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-compat" value="wired" checked style="accent-color: #058531;"> Wired
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-compat" value="wireless" checked style="accent-color: #058531;"> Wireless
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-compat" value="bluetooth" checked style="accent-color: #058531;"> Bluetooth
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-compat" value="usb-c" checked style="accent-color: #058531;"> USB-C
+          </label>
+          <label class="d-flex align-items-center gap-2">
+            <input type="checkbox" class="filter-compat" value="usb-a" checked style="accent-color: #058531;"> USB-A
+          </label>
+        </div>
+      </div>
+
+      <!-- Reset -->
+      <button class="btn btn-sm w-100" id="resetFilters"
+        style="background-color: #1a1a1a; color: #fff; font-size: 0.75rem; border-radius: 50rem;">
+        Reset Filters
+      </button>
+
+    </div>
+
+    <!-- Main content -->
+    <div class="p-3 flex-grow-1 overflow-y-auto" style="background-color: #ffffff;">
+      <div style="max-width: 900px; margin: 0 auto;">
+      <h5 id="deals" class="text-center section-heading mb-3">Our Deals</h5>
+      <div class="deals-banner mb-4"></div>
+      <div class="row row-cols-3 g-3" id="productGrid">
+        <!-- Cards rendered by JS -->
+      </div><!-- end row -->
+      </div><!-- end max-width wrapper -->
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // -------------------------------------------------------
+    // PRODUCT DATA
+    // To add a new product, just add an object to this array.
+    // -------------------------------------------------------
+    const products = [
+      {
+        name: "Pro Gaming Headset",
+        label: "PC · Wired · USB-A",
+        price: 29.99,
+        rating: 4,
+        devices: ["pc"],
+        compats: ["wired", "usb-a"],
+        link: "description.html"
+      },
+      {
+        name: "Wireless Controller",
+        label: "PlayStation · Xbox · Bluetooth",
+        price: 49.99,
+        rating: 4.5,
+        devices: ["playstation", "xbox"],
+        compats: ["wireless", "bluetooth"],
+        link: "description.html"
+      },
+      {
+        name: "Mobile Gaming Grip",
+        label: "Mobile · Bluetooth · USB-C",
+        price: 19.99,
+        rating: 3,
+        devices: ["mobile"],
+        compats: ["bluetooth", "usb-c"],
+        link: "description.html"
+      },
+      {
+        name: "Mechanical Keyboard",
+        label: "PC · Wireless · USB-A",
+        price: 39.99,
+        rating: 5,
+        devices: ["pc"],
+        compats: ["wireless", "usb-a"],
+        link: "description.html"
+      },
+      {
+        name: "Switch Carry Case",
+        label: "Nintendo Switch · USB-C",
+        price: 24.99,
+        rating: 3.5,
+        devices: ["nintendo"],
+        compats: ["wired", "usb-c"],
+        link: "description.html"
+      },
+      {
+        name: "RGB Gaming Mouse",
+        label: "PC · Xbox · Wired · USB-A/C",
+        price: 59.99,
+        rating: 4,
+        devices: ["pc", "xbox"],
+        compats: ["wired", "usb-a", "usb-c"],
+        link: "description.html"
+      }
+    ];
+
+    // -------------------------------------------------------
+    // RENDER HELPERS
+    // -------------------------------------------------------
+    function starsHTML(rating) {
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        if (rating >= i)       html += '<i class="bi bi-star-fill"></i>';
+        else if (rating >= i - 0.5) html += '<i class="bi bi-star-half"></i>';
+        else                   html += '<i class="bi bi-star"></i>';
+      }
+      return html;
+    }
+
+    function renderCards(list) {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = list.length === 0
+        ? '<div class="col-12 text-center text-muted py-5">No products match your filters.</div>'
+        : list.map(p => `
+          <div class="col product-item"
+               data-price="${p.price}"
+               data-device="${p.devices.join(' ')}"
+               data-compat="${p.compats.join(' ')}">
+            <a href="${p.link}" class="card product-card h-100">
+              <div class="card-img-placeholder"></div>
+              <div class="card-body p-2">
+                <div class="card-title">${p.name}</div>
+                <div class="card-text">${p.label}</div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="card-price">$${p.price.toFixed(2)}</span>
+                  <div class="card-stars">${starsHTML(p.rating)}</div>
+                </div>
+              </div>
+              <div class="card-footer bg-white border-top-0 p-2">
+                <button class="btn btn-cart w-100">
+                  <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
+                </button>
+              </div>
+            </a>
+          </div>`).join('');
+    }
+
+    // -------------------------------------------------------
+    // FILTER LOGIC
+    // -------------------------------------------------------
+    const priceRange   = document.getElementById('priceRange');
+    const priceMin     = document.getElementById('priceMin');
+    const priceMax     = document.getElementById('priceMax');
+    const priceDisplay = document.getElementById('priceDisplay');
+
+    function getChecked(cls) {
+      return [...document.querySelectorAll('.' + cls + ':checked')].map(el => el.value);
+    }
+
+    function applyFilters() {
+      const max     = parseFloat(priceMax.value) || 100;
+      const min     = parseFloat(priceMin.value) || 0;
+      const devices = getChecked('filter-device');
+      const compats = getChecked('filter-compat');
+
+      const filtered = products.filter(p =>
+        p.price >= min &&
+        p.price <= max &&
+        p.devices.some(d => devices.includes(d)) &&
+        p.compats.some(c => compats.includes(c))
+      );
+
+      renderCards(filtered);
+    }
+
+    // Sync range slider → max input & label
+    priceRange.addEventListener('input', () => {
+      priceMax.value = priceRange.value;
+      priceDisplay.textContent = '$' + priceRange.value;
+      applyFilters();
+    });
+
+    priceMax.addEventListener('input', () => {
+      priceRange.value = priceMax.value;
+      priceDisplay.textContent = '$' + priceMax.value;
+      applyFilters();
+    });
+
+    priceMin.addEventListener('input', applyFilters);
+
+    document.querySelectorAll('.filter-device, .filter-compat').forEach(el => {
+      el.addEventListener('change', applyFilters);
+    });
+
+    document.getElementById('resetFilters').addEventListener('click', () => {
+      priceRange.value = 100;
+      priceMin.value   = 0;
+      priceMax.value   = 100;
+      priceDisplay.textContent = '$100';
+      document.querySelectorAll('.filter-device, .filter-compat').forEach(el => el.checked = true);
+      applyFilters();
+    });
+
+    // Initial render
+    renderCards(products);
+  </script>
+</body>
+</html>
