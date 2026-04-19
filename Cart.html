@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="./styles.css" rel="stylesheet">
+</head>
+<body class="bg-white d-flex flex-column min-vh-100">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg app-navbar navbar-dark">
+  <div class="container-fluid">
+    <div class="navbar-collapse">
+      <ul class="navbar-nav me-auto mb-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="index.html">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="catalog.html">CATALOG</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="wishlist.html">WISHLIST</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="deals.html">DEALS</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center gap-2">
+        <div class="input-group">
+          <button class="btn btn-outline-secondary">
+            <i class="bi bi-search"></i>
+          </button>
+          <input type="text" class="form-control" placeholder="search">
+        </div>
+        <a class="btn btn-link nav-icon-btn" href="Cart.html" aria-label="Cart">
+          <i class="bi bi-bag-heart-fill"></i>
+        </a>
+        <button class="btn btn-link nav-icon-btn" type="button" aria-label="User profile">
+          <i class="bi bi-person-circle"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Content -->
+<div class="container mt-4 flex-grow-1">
+
+    <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+        <h3 class="mb-0">Your Cart</h3>
+        <button id="clearCartBtn" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-trash3 me-1"></i>
+            Clear cart
+        </button>
+    </div>
+
+    <div id="cartAlertHost" class="mb-3" aria-live="polite" aria-atomic="true"></div>
+
+    <table class="table bg-white">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th class="text-end">Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="cartTbody"></tbody>
+    </table>
+
+    <div class="row g-3 align-items-center">
+        <div class="col-12 col-md">
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+                <div class="me-auto">
+                    <div class="text-muted small">Estimated total</div>
+                    <div class="h5 mb-0" id="cartTotal">$0.00</div>
+                </div>
+                <a id="checkoutBtn" href="checkout.html" class="btn btn-success btn-lg">
+                    <i class="bi bi-credit-card me-1"></i>
+                    Checkout
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="app-footer mt-auto">
+  <div class="container py-3">
+    <div class="d-flex gap-4">
+      <p class="mb-0">Customer Service</p>
+      <p class="mb-0">Privacy Policy</p>
+      <p class="mb-0">About US</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Remove confirmation modal -->
+<div class="modal fade" id="removeConfirmModal" tabindex="-1" aria-labelledby="removeConfirmTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeConfirmTitle">Remove item?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-muted">This will remove <span class="fw-semibold" id="removeItemName">the item</span> from your cart.</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmRemoveBtn">
+          <i class="bi bi-trash3 me-1"></i>
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./cart.js"></script>
+</body>
+</html>
