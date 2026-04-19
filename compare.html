@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-weight: 600;
+    }
+    p, a {
+      font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-weight: 300;
+    }
+
+    /* Primary: #1A1A1A bg / #FFFFFF font */
+    body { background-color: #FFFFFF; color: #1A1A1A; }
+    .navbar-custom { background-color: #1A1A1A !important; }
+    .navbar-custom .nav-link { color: #FFFFFF !important; }
+    .navbar-custom .nav-link:hover { opacity: 0.8; }
+    .btn-primary { background-color: #1A1A1A !important; border-color: #1A1A1A !important; color: #FFFFFF !important; }
+    .btn-primary:hover { background-color: #333333 !important; border-color: #333333 !important; }
+
+    /* Secondary: #058531 bg / #FFFFFF font */
+    .btn-secondary { background-color: #058531 !important; border-color: #058531 !important; color: #FFFFFF !important; }
+    .btn-secondary:hover { background-color: #046b27 !important; border-color: #046b27 !important; }
+    .btn-outline-secondary { border-color: #058531 !important; color: #058531 !important; }
+    .btn-outline-secondary:hover { background-color: #058531 !important; color: #FFFFFF !important; }
+
+    /* Footer: #343A40 bg / #FFFFFF font */
+    .footer-custom { background-color: #343A40 !important; }
+    .footer-custom a { color: #FFFFFF !important; }
+
+    /* Bottom action bar */
+    .pseudo-nav-custom { background-color: #343A40 !important; }
+
+    /* Alternating card backgrounds on mobile */
+    @media (max-width: 991.98px) {
+      .compare-card:nth-child(even) .card { background-color: #f5f5f5; }
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom border-bottom">
+    <div class="container-fluid">
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="catalog.html">CATALOG</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="wishlist.html">WISHLIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="catalog.html#deals">DEALS</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+          <form class="input-group" action="catalog.html" method="get">
+            <button class="btn btn-outline-secondary" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+            <input type="text" name="q" class="form-control" placeholder="search">
+          </form>
+          <a class="btn btn-outline-secondary rounded-circle" href="Cart.html" aria-label="Cart">
+            <i class="bi bi-bag-heart-fill"></i>
+          </a>
+          <button class="btn btn-outline-secondary rounded-circle" aria-label="User Profile">
+            <i class="bi bi-person-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Action Buttons: visible on mobile only, at top of page -->
+  <div class="d-flex d-lg-none justify-content-center gap-2 p-3 pseudo-nav-custom">
+    <a class="btn btn-primary btn-sm" href="checkout.html">
+      <i class="bi bi-bag-check me-1"></i> Buy Now
+    </a>
+    <a class="btn btn-secondary btn-sm" href="Cart.html">
+      <i class="bi bi-cart-plus me-1"></i> Add to Cart
+    </a>
+    <a class="btn btn-secondary btn-sm" href="wishlist.html">
+      <i class="bi bi-heart me-1"></i> Wishlist
+    </a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container-fluid p-4 flex-grow-1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Catalog</a></li>
+        <li class="breadcrumb-item"><span>Compare</span></li>
+      </ol>
+    </nav>
+
+    <!-- Card Grid -->
+    <div class="row g-3">
+
+      <!-- Product 1 -->
+      <div class="col-12 col-lg-3 compare-card">
+        <div class="card h-100">
+          <div class="ratio ratio-16x9 bg-secondary">
+            <img src="" alt="Product 1" class="img-thumbnail w-100 h-100 object-fit-cover">
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">Product 1</h6>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder product description.</p>
+            <hr>
+            <h6>Specifications</h6>
+            <ul class="list-unstyled small">
+              <li>Weight: 1.2 kg</li>
+              <li>Dimensions: 30 x 20 x 10 cm</li>
+              <li>Color: Black</li>
+              <li>Material: Plastic</li>
+            </ul>
+            <hr>
+            <h6>Reviews</h6>
+            <a class="small" href="review.html">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+              (4/5) &mdash; 24 reviews
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="col-12 col-lg-3 compare-card">
+        <div class="card h-100">
+          <div class="ratio ratio-16x9 bg-secondary">
+            <img src="" alt="Product 2" class="img-thumbnail w-100 h-100 object-fit-cover">
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">Product 2</h6>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder product description.</p>
+            <hr>
+            <h6>Specifications</h6>
+            <ul class="list-unstyled small">
+              <li>Weight: 0.9 kg</li>
+              <li>Dimensions: 25 x 18 x 8 cm</li>
+              <li>Color: White</li>
+              <li>Material: Aluminium</li>
+            </ul>
+            <hr>
+            <h6>Reviews</h6>
+            <a class="small" href="review.html">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+              (5/5) &mdash; 56 reviews
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="col-12 col-lg-3 compare-card">
+        <div class="card h-100">
+          <div class="ratio ratio-16x9 bg-secondary">
+            <img src="" alt="Product 3" class="img-thumbnail w-100 h-100 object-fit-cover">
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">Product 3</h6>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder product description.</p>
+            <hr>
+            <h6>Specifications</h6>
+            <ul class="list-unstyled small">
+              <li>Weight: 1.5 kg</li>
+              <li>Dimensions: 35 x 22 x 12 cm</li>
+              <li>Color: Silver</li>
+              <li>Material: Steel</li>
+            </ul>
+            <hr>
+            <h6>Reviews</h6>
+            <a class="small" href="review.html">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+              (3/5) &mdash; 11 reviews
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="col-12 col-lg-3 compare-card">
+        <div class="card h-100">
+          <div class="ratio ratio-16x9 bg-secondary">
+            <img src="" alt="Product 4" class="img-thumbnail w-100 h-100 object-fit-cover">
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">Product 4</h6>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder product description.</p>
+            <hr>
+            <h6>Specifications</h6>
+            <ul class="list-unstyled small">
+              <li>Weight: 1.1 kg</li>
+              <li>Dimensions: 28 x 19 x 9 cm</li>
+              <li>Color: Blue</li>
+              <li>Material: Carbon</li>
+            </ul>
+            <hr>
+            <h6>Reviews</h6>
+            <a class="small" href="review.html">
+              <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+              (4/5) &mdash; 38 reviews
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pseudo Navbar (Buy/Cart/Wishlist buttons) — desktop only -->
+  <nav class="navbar pseudo-nav-custom border-top d-none d-lg-flex">
+    <div class="container-fluid justify-content-center gap-3">
+      <a class="btn btn-primary" href="checkout.html">
+        <i class="bi bi-bag-check me-1"></i> Buy
+      </a>
+      <a class="btn btn-secondary" href="Cart.html">
+        <i class="bi bi-cart-plus me-1"></i> Add to Cart
+      </a>
+      <a class="btn btn-secondary" href="wishlist.html">
+        <i class="bi bi-heart me-1"></i> Wishlist
+      </a>
+    </div>
+  </nav>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Active link highlighting based on current page
+    const pageAliases = { 'compare.html': 'catalog.html' };
+    const rawPage = window.location.pathname.split('/').pop() || 'index.html';
+    const currentPage = pageAliases[rawPage] || rawPage;
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      const linkHref = link.getAttribute('href');
+      if (!linkHref.includes('#') && linkHref === currentPage) {
+        link.classList.add('active', 'fw-bold');
+        link.style.color = '#058531';
+        link.style.borderBottom = '2px solid #058531';
+      }
+    });
+
+    // Active breadcrumb highlighting
+    const breadcrumbMap = { 'compare.html': 'Compare', 'catalog.html': 'Catalog' };
+    const activeLabel = breadcrumbMap[rawPage];
+    if (activeLabel) {
+      document.querySelectorAll('.breadcrumb-item').forEach(item => {
+        if (item.textContent.trim() === activeLabel) {
+          item.classList.add('active', 'fw-bold');
+          item.setAttribute('aria-current', 'page');
+          item.style.color = '#058531';
+          const span = item.querySelector('span');
+          if (span) span.style.borderBottom = '2px solid #058531';
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>
