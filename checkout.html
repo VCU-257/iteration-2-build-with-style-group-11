@@ -16,7 +16,10 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg app-navbar navbar-dark">
     <div class="container-fluid">
-      <div class="navbar-collapse">
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
         <ul class="navbar-nav me-auto mb-0">
           <li class="nav-item">
             <a class="nav-link" href="index.html">HOME</a>
@@ -31,7 +34,7 @@
             <a class="nav-link" href="deals.html">DEALS</a>
           </li>
         </ul>
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
           <div class="input-group">
             <button class="btn btn-outline-secondary">
               <i class="bi bi-search"></i>
@@ -100,10 +103,36 @@
                 <input id="email" class="form-control" type="email" placeholder="you@example.com" autocomplete="email" required>
                 <div class="invalid-feedback">Please enter a valid email.</div>
               </div>
+
+              <div class="col-12 mt-2">
+                <h6 class="mb-0">Payment information</h6>
+                <p class="text-muted small mb-0">Nothing is charged in this prototype.</p>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="cardName">Name on card</label>
+                <input id="cardName" class="form-control" type="text" placeholder="Name as shown on card" autocomplete="cc-name" required>
+                <div class="invalid-feedback">Please enter the name on your card.</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="cardNumber">Card number</label>
+                <input id="cardNumber" class="form-control" type="text" inputmode="numeric" placeholder="Card number" autocomplete="cc-number" maxlength="19" required pattern="^[\d\s]{13,23}$" title="Enter 13–19 digits (spaces optional)">
+                <div class="invalid-feedback">Please enter a valid card number.</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <label class="form-label" for="cardExpiry">Expires</label>
+                <input id="cardExpiry" class="form-control" type="text" placeholder="MM/YY" autocomplete="cc-exp" maxlength="5" required pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$" title="Use MM/YY">
+                <div class="invalid-feedback">Use MM/YY.</div>
+              </div>
+              <div class="col-6 col-md-4">
+                <label class="form-label" for="cardCvc">CVC</label>
+                <input id="cardCvc" class="form-control" type="text" inputmode="numeric" placeholder="123" autocomplete="cc-csc" maxlength="4" required pattern="^[0-9]{3,4}$">
+                <div class="invalid-feedback">Enter 3 or 4 digits.</div>
+              </div>
+
               <div class="col-12">
                 <div class="alert alert-info d-flex align-items-start gap-2 mb-0" role="note">
                   <i class="bi bi-info-circle mt-1"></i>
-                  <div class="small">This is a prototype checkout. No payment is collected.</div>
+                  <div class="small">This is a prototype checkout. Payment is not processed or stored.</div>
                 </div>
               </div>
             </form>

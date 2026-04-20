@@ -84,7 +84,7 @@ function showAlert(message, variant = "success") {
 function renderEmptyState(tbody) {
   tbody.innerHTML = `
     <tr>
-      <td colspan="5" class="text-center py-5">
+      <td colspan="3" class="text-center py-5">
         <div class="text-muted mb-2"><i class="bi bi-bag-x fs-2"></i></div>
         <div class="fw-semibold">Your cart is empty</div>
         <div class="text-muted small">Add items from the catalog to see them here.</div>
@@ -104,21 +104,17 @@ function renderCart(cart) {
   if (!cart.length) {
     renderEmptyState(tbody);
     totalEl.textContent = formatMoney(0);
-    checkoutBtn.classList.add("disabled");
-    checkoutBtn.setAttribute("aria-disabled", "true");
-    checkoutBtn.tabIndex = -1;
+    checkoutBtn.classList.remove("disabled");
+    checkoutBtn.removeAttribute("aria-disabled");
+    checkoutBtn.tabIndex = 0;
     clearCartBtn.disabled = true;
     return;
   }
 
-  checkoutBtn.classList.remove("disabled");
-  checkoutBtn.removeAttribute("aria-disabled");
-  checkoutBtn.tabIndex = 0;
   clearCartBtn.disabled = false;
 
   tbody.innerHTML = cart
     .map((item) => {
-      const subtotal = item.price * item.qty;
       const safeName = item.name.replaceAll('"', "&quot;");
       const safeAlt = item.alt.replaceAll('"', "&quot;");
       return `
@@ -141,31 +137,15 @@ function renderCart(cart) {
           </td>
           <td>${formatMoney(item.price)}</td>
           <td>
-            <div class="input-group input-group-sm cart-qty">
-              <button class="btn btn-outline-secondary" type="button" data-action="dec" aria-label="Decrease quantity">
-                <i class="bi bi-dash"></i>
+            <div class="cart-qty-pill" role="group" aria-label="Quantity">
+              <button class="cart-qty-pill-btn" type="button" data-action="trash" aria-label="Decrease quantity or remove item">
+                <i class="bi bi-trash" aria-hidden="true"></i>
               </button>
-              <input
-                class="form-control text-center"
-                type="number"
-                min="1"
-                step="1"
-                inputmode="numeric"
-                value="${item.qty}"
-                data-action="qty"
-                aria-label="Quantity"
-              >
-              <button class="btn btn-outline-secondary" type="button" data-action="inc" aria-label="Increase quantity">
-                <i class="bi bi-plus"></i>
+              <span class="cart-qty-value">${item.qty}</span>
+              <button class="cart-qty-pill-btn" type="button" data-action="inc" aria-label="Increase quantity">
+                <span class="cart-qty-plus" aria-hidden="true">+</span>
               </button>
             </div>
-          </td>
-          <td class="text-end fw-semibold" data-role="subtotal">${formatMoney(subtotal)}</td>
-          <td class="text-end">
-            <button class="btn btn-sm btn-outline-danger" type="button" data-action="remove">
-              <i class="bi bi-trash3 me-1"></i>
-              Remove
-            </button>
           </td>
         </tr>
       `;
@@ -222,28 +202,30 @@ function attachCartHandlers() {
       return;
     }
 
-    if (action === "inc" || action === "dec") {
+    if (action === "trash") {
+      if (item.qty > 1) {
+        cart = updateCartItem(cart, id, (x) => {
+          x.qty = x.qty - 1;
+          return x;
+        });
+        saveCart(cart);
+        renderCart(cart);
+      } else {
+        pendingRemoveId = id;
+        removeItemName.textContent = item.name;
+        removeModal.show();
+      }
+      return;
+    }
+
+    if (action === "inc") {
       cart = updateCartItem(cart, id, (x) => {
-        x.qty = x.qty + (action === "inc" ? 1 : -1);
+        x.qty = x.qty + 1;
         return x;
       });
       saveCart(cart);
       renderCart(cart);
     }
-  });
-
-  tbody.addEventListener("change", (e) => {
-    const input = e.target.closest('input[data-action="qty"]');
-    if (!input) return;
-    const id = getRowId(input);
-    if (!id) return;
-    let nextQty = Number.parseInt(input.value, 10);
-    if (!Number.isFinite(nextQty) || nextQty < 1) nextQty = 1;
-
-    let cart = loadCart() ?? [];
-    cart = updateCartItem(cart, id, (x) => ({ ...x, qty: nextQty }));
-    saveCart(cart);
-    renderCart(cart);
   });
 
   confirmRemoveBtn.addEventListener("click", () => {
