@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/lux/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    /* Typography */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-weight: 600;
+    }
+    p, a {
+      font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-weight: 300;
+    }
+
+    /* Primary: #1A1A1A bg / #FFFFFF font */
+    body { background-color: #FFFFFF; color: #1A1A1A; }
+    .navbar-custom { background-color: #1A1A1A !important; }
+    .navbar-custom .nav-link { color: #FFFFFF !important; }
+    .navbar-custom .nav-link:hover { opacity: 0.8; }
+    .btn-primary { background-color: #1A1A1A !important; border-color: #1A1A1A !important; color: #FFFFFF !important; }
+    .btn-primary:hover { background-color: #333333 !important; border-color: #333333 !important; }
+
+    /* Secondary: #058531 bg / #FFFFFF font */
+    .btn-secondary { background-color: #058531 !important; border-color: #058531 !important; color: #FFFFFF !important; }
+    .btn-secondary:hover { background-color: #046b27 !important; border-color: #046b27 !important; }
+    .btn-outline-secondary { border-color: #058531 !important; color: #058531 !important; }
+    .btn-outline-secondary:hover { background-color: #058531 !important; color: #FFFFFF !important; }
+
+    /* Footer: #343A40 bg / #FFFFFF font */
+    .footer-custom { background-color: #343A40 !important; }
+    .footer-custom a { color: #FFFFFF !important; }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom border-bottom">
+    <div class="container-fluid">
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarMain">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="catalog.html">CATALOG</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="wishlist.html">WISHLIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="catalog.html#deals">DEALS</a>
+          </li>
+        </ul>
+        <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+          <form class="input-group" action="catalog.html" method="get">
+            <button class="btn btn-outline-secondary" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+            <input type="text" name="q" class="form-control" placeholder="search">
+          </form>
+          <a class="btn btn-outline-secondary rounded-circle" href="Cart.html" aria-label="Cart">
+            <i class="bi bi-bag-heart-fill"></i>
+          </a>
+          <button class="btn btn-outline-secondary rounded-circle" aria-label="User Profile">
+            <i class="bi bi-person-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container-fluid p-4">
+
+    <!-- Featured Deal: mobile only, full-width on top, links to catalog -->
+    <div class="row g-3 mb-4 d-lg-none">
+      <div class="col-12">
+        <a class="card text-decoration-none" href="catalog.html" style="background-color:#1A1A1A;">
+          <div class="ratio ratio-16x9 d-flex align-items-center justify-content-center">
+            <span class="text-white fw-bold fs-5 text-center p-3">Featured Deal</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recently Viewed: col-lg-3 desktop (4/row), col-6 mobile (2/row) -->
+    <h5 class="fw-bold mb-3">Recently Viewed</h5>
+    <div class="row g-3 mb-5">
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Wish List: col-lg-3 desktop (4/row), col-6 mobile (2/row) -->
+    <h5 class="fw-bold mb-3">Wish list</h5>
+    <div class="row g-3">
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+      <div class="col-6 col-lg-3">
+        <a class="card" href="description.html">
+          <div class="ratio ratio-16x9 bg-secondary"></div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-custom py-3 mt-auto">
+    <div class="container-fluid">
+      <a href="#" class="text-white text-decoration-none me-4 small">Customer Service</a>
+      <a href="#" class="text-white text-decoration-none me-4 small">Privacy Policy</a>
+      <a href="#" class="text-white text-decoration-none small">About US</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // On mobile viewports, HOME nav link routes to catalog (catalog acts as front page)
+    if (window.innerWidth < 992) {
+      const homeLink = document.querySelector('.navbar-nav .nav-link[href="index.html"]');
+      if (homeLink) homeLink.href = 'catalog.html';
+    }
+
+    // Active link highlighting based on current page
+    const pageAliases = { 'compare.html': 'catalog.html' };
+    const rawPage = window.location.pathname.split('/').pop() || 'index.html';
+    const currentPage = pageAliases[rawPage] || rawPage;
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      const linkHref = link.getAttribute('href');
+      if (!linkHref.includes('#') && linkHref === currentPage) {
+        link.classList.add('active', 'fw-bold');
+        link.style.color = '#058531';
+        link.style.borderBottom = '2px solid #058531';
+      }
+    });
+
+  </script>
+</body>
+</html>
