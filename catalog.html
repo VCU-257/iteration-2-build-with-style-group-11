@@ -455,6 +455,26 @@
 
     // Initial render
     renderCards(products);
+
+    // Save clicked product to recentlyViewed in localStorage
+    document.getElementById('productGrid').addEventListener('click', function(e) {
+      const card = e.target.closest('a.product-card');
+      if (!card) return;
+      const cardTitle = card.querySelector('.card-title')?.textContent.trim();
+      const product = products.find(p => p.name === cardTitle);
+      if (!product) return;
+      const item = {
+        name:  product.name,
+        price: '$' + product.price.toFixed(2),
+        label: product.label,
+        href:  product.link
+      };
+      let recent = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+      recent = recent.filter(i => i.name !== item.name); // remove duplicate
+      recent.unshift(item);                               // add to front
+      recent = recent.slice(0, 10);                      // keep max 10
+      localStorage.setItem('recentlyViewed', JSON.stringify(recent));
+    });
   </script>
 </body>
 </html>

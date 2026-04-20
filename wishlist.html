@@ -207,5 +207,27 @@
 </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Save current wishlist DOM state to localStorage
+      function saveWishlist() {
+        const items = [];
+        document.querySelectorAll('.wishlist-row').forEach(row => {
+          items.push({
+            name:  row.querySelector('.flex-grow-1 p')?.textContent.trim() || '',
+            price: row.querySelector('.fw-bold')?.textContent.trim() || '',
+            href:  row.querySelector('a.stretched-link')?.getAttribute('href') || 'description.html'
+          });
+        });
+        localStorage.setItem('wishlist', JSON.stringify(items));
+      }
+
+      // Save on page load so index.html always has fresh data
+      saveWishlist();
+
+      // Re-save after each item is removed
+      document.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => setTimeout(saveWishlist, 0));
+      });
+    </script>
 </body>
 </html>

@@ -96,7 +96,8 @@
 
     <!-- Recently Viewed: col-lg-3 desktop (4/row), col-6 mobile (2/row) -->
     <h5 class="fw-bold mb-3">Recently Viewed</h5>
-    <div class="row g-3 mb-5">
+    <div class="row g-3 mb-5" id="recently-viewed-cards">
+      <!-- Populated from localStorage by script below; placeholders shown as fallback -->
       <div class="col-6 col-lg-3">
         <a class="card" href="description.html">
           <div class="ratio ratio-16x9 bg-secondary"></div>
@@ -121,7 +122,8 @@
 
     <!-- Wish List: col-lg-3 desktop (4/row), col-6 mobile (2/row) -->
     <h5 class="fw-bold mb-3">Wish list</h5>
-    <div class="row g-3">
+    <div class="row g-3" id="wishlist-cards">
+      <!-- Populated from localStorage by script below; placeholders shown as fallback -->
       <div class="col-6 col-lg-3">
         <a class="card" href="description.html">
           <div class="ratio ratio-16x9 bg-secondary"></div>
@@ -156,6 +158,41 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Populate Recently Viewed section from localStorage (saved by catalog.html)
+    function buildCard(item) {
+      const col = document.createElement('div');
+      col.className = 'col-6 col-lg-3';
+      col.innerHTML = `
+        <a class="card text-decoration-none" href="${item.href}">
+          <div class="ratio ratio-16x9 bg-secondary d-flex align-items-center justify-content-center">
+            <span class="text-white small text-center p-1">Picture of Item</span>
+          </div>
+          <div class="card-body p-2">
+            <p class="card-text small text-truncate mb-0">${item.name}</p>
+            <p class="card-text small fw-bold mb-0">${item.price}</p>
+          </div>
+        </a>`;
+      return col;
+    }
+
+    const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+    const top4Recent = recentlyViewed.slice(0, 4);
+    const recentContainer = document.getElementById('recently-viewed-cards');
+    if (recentContainer && top4Recent.length > 0) {
+      recentContainer.innerHTML = '';
+      top4Recent.forEach(item => recentContainer.appendChild(buildCard(item)));
+    }
+
+    // Populate Wish List section from localStorage (saved by wishlist.html)
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const top4 = wishlist.slice(0, 4);
+    const container = document.getElementById('wishlist-cards');
+    if (container && top4.length > 0) {
+      container.innerHTML = '';
+      top4.forEach(item => container.appendChild(buildCard(item)));
+    }
+  </script>
   <script>
     // On mobile viewports, HOME nav link routes to catalog (catalog acts as front page)
     if (window.innerWidth < 992) {
