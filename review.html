@@ -20,7 +20,6 @@
       font-weight: 600;
     }
 
-    /* Primary Color */
     .btn-primary {
       background-color: #1a1a1a;
       border-color: #1a1a1a;
@@ -32,7 +31,6 @@
       color: #ffffff;
     }
 
-    /* Secondary Color */
     .btn-secondary {
       background-color: #058531;
       border-color: #058531;
@@ -44,7 +42,6 @@
       color: #ffffff;
     }
 
-    /* Navbar */
     .navbar {
       background-color: #1a1a1a !important;
     }
@@ -82,18 +79,6 @@
       box-shadow: none;
     }
 
-    /* Sidebar */
-    #sidebar {
-      background-color: #f4f4f4 !important;
-      border-right: 1px solid #e0e0e0;
-    }
-    .filter-bar {
-      background-color: #d0d0d0;
-      border-radius: 4px;
-      height: 14px;
-    }
-
-    /* Product card */
     .product-summary-card {
       background-color: #f8f8f8;
       border: 1px solid #e8e8e8;
@@ -113,32 +98,32 @@
       flex-shrink: 0;
     }
 
-    /* Review stars */
-    .star-rating i {
-      color: #058531;
-    }
+    .star-rating i { color: #058531; }
 
-    /* Review content box */
     .review-box {
       background-color: #f8f8f8;
       border: 1px solid #e8e8e8;
       border-radius: 6px;
       padding: 1rem;
-      min-height: 100px;
+      min-height: 80px;
       font-size: 0.9rem;
-      color: #555;
+      color: #333;
     }
 
-    /* Avatar placeholder */
     .avatar-placeholder {
       background-color: #d0d0d0;
       border-radius: 50%;
       width: 44px;
       height: 44px;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #555;
     }
 
-    /* Bottom action bar */
     .bottom-bar {
       background-color: #1a1a1a;
       border-top: 1px solid #333;
@@ -157,7 +142,6 @@
       color: #ffffff;
     }
 
-    /* Section label */
     .section-label {
       font-weight: 600;
       font-size: 0.95rem;
@@ -167,11 +151,89 @@
       border-bottom: 2px solid #058531;
       display: inline-block;
       padding-bottom: 2px;
-      margin-bottom: 1rem;
+    }
+
+    /* Star picker in modal */
+    .star-picker {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+    .star-picker input { display: none; }
+    .star-picker label {
+      font-size: 1.6rem;
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .star-picker label:hover,
+    .star-picker label:hover ~ label,
+    .star-picker input:checked ~ label {
+      color: #058531;
+    }
+
+    /* Review entry animation */
+    .review-entry {
+      animation: fadeSlideIn 0.3s ease;
+    }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reviewer-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #1a1a1a;
+      margin-bottom: 2px;
+    }
+    .review-date {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+
+    .btn-submit-review {
+      background-color: #1a1a1a;
+      border-color: #1a1a1a;
+      color: #fff;
+      border-radius: 50rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .btn-submit-review:hover {
+      background-color: #058531;
+      border-color: #058531;
+      color: #fff;
+    }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 767px) {
+      /* Product summary: stack image above text */
+      .product-summary-card {
+        flex-direction: column !important;
+      }
+      .product-image-placeholder {
+        width: 100% !important;
+        height: 160px !important;
+      }
+
+      /* Bottom bar: 2x2 grid on small screens */
+      .bottom-bar {
+        flex-wrap: wrap;
+        gap: 0.4rem !important;
+        padding: 0.6rem !important;
+      }
+      .bottom-bar .btn {
+        flex: 1 1 calc(50% - 0.4rem) !important;
+        font-size: 0.72rem !important;
+        padding: 7px 4px !important;
+      }
     }
   </style>
 </head>
-<body class="vh-100 d-flex flex-column overflow-hidden" style="background-color: #ffffff; color: #1a1a1a;">
+<body style="background-color: #ffffff; color: #1a1a1a; display: flex; flex-direction: column; min-height: 100vh;">
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg border-bottom">
@@ -206,45 +268,43 @@
     </div>
   </nav>
 
-  <div class="d-flex flex-grow-1 overflow-hidden">
+  <div style="flex: 1; overflow: hidden;">
+    <div class="p-3" style="background-color: #ffffff; overflow-y: auto; height: 100%;">
+      <div style="max-width: 760px; margin: 0 auto;">
 
-    <!-- Main -->
-    <div class="p-3 flex-grow-1 overflow-y-auto" style="background-color: #ffffff;">
-
-      <!-- Product summary card -->
-      <div class="d-flex gap-3 mb-4 p-3 product-summary-card">
-        <div class="product-image-placeholder">Picture</div>
-        <div class="d-flex flex-column justify-content-center">
-          <div class="fw-bold fs-5 mb-2" style="color: #1a1a1a;">Name of the product</div>
-          <div class="fst-italic mb-2" style="color: #666; font-size: 0.9rem;">Description</div>
-          <hr class="my-1" style="border-color: #e0e0e0;">
-          <hr class="my-1" style="border-color: #e0e0e0;">
-        </div>
-      </div>
-
-      <!-- Reviews section -->
-      <div class="section-label">Reviews</div>
-
-      <div class="d-flex gap-3 mb-4">
-        <div class="avatar-placeholder"></div>
-        <div class="flex-grow-1">
-          <div class="star-rating fs-5 mb-1">
-            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+        <!-- Product summary card — populated by JS from localStorage -->
+        <div class="d-flex gap-3 mb-4 p-3 product-summary-card" id="productSummary">
+          <div class="product-image-placeholder" id="productImage">
+            <i class="bi bi-controller" style="font-size:2rem; color:#999;"></i>
           </div>
-          <div class="review-box">Customer reviews</div>
-        </div>
-      </div>
-
-      <div class="d-flex gap-3 mb-4">
-        <div class="avatar-placeholder"></div>
-        <div class="flex-grow-1">
-          <div class="star-rating fs-5 mb-1">
-            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          <div class="d-flex flex-column justify-content-center">
+            <div class="fw-bold fs-5 mb-1" id="productName" style="color: #1a1a1a;">—</div>
+            <div class="mb-1" id="productLabel" style="color: #888; font-size: 0.85rem;"></div>
+            <div class="fw-bold mb-2" id="productPrice" style="color: #058531; font-size: 1rem;"></div>
+            <div id="productStars" class="star-rating" style="font-size: 0.8rem;"></div>
           </div>
-          <div class="review-box">Customer reviews</div>
         </div>
-      </div>
 
+        <!-- No product fallback banner (hidden by default) -->
+        <div id="noProductBanner" style="display:none;" class="alert mb-4"
+             style="background:#fff8e1; border:1px solid #ffe082; border-radius:8px; font-size:0.85rem; color:#7a6000;">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          No product selected. <a href="catalog.html" style="color:#058531; font-weight:600;">Browse the catalog</a> and click a product to see its reviews.
+        </div>
+
+        <!-- Reviews header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="section-label">Reviews</div>
+          <span id="reviewCount" style="font-size: 0.8rem; color: #888;"></span>
+        </div>
+
+        <!-- Review list -->
+        <div id="reviewList"></div>
+        <div id="emptyState" style="display:none; text-align:center; color:#aaa; font-size:0.9rem; padding: 2rem 0;">
+          No reviews yet. Be the first to write one!
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -253,9 +313,262 @@
     <a class="btn btn-outline-secondary flex-grow-1" href="checkout.html">Buy Now</a>
     <a class="btn btn-outline-secondary flex-grow-1" href="cart.html">Add to Cart</a>
     <a class="btn btn-outline-secondary flex-grow-1" href="wishlist.html">Wishlist</a>
-    <a class="btn btn-outline-secondary flex-grow-1" href="review.html">Write Review</a>
+    <button class="btn btn-outline-secondary flex-grow-1" data-bs-toggle="modal" data-bs-target="#writeReviewModal">Write Review</button>
+  </div>
+
+  <!-- Write Review Modal -->
+  <div class="modal fade" id="writeReviewModal" tabindex="-1" aria-labelledby="writeReviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 12px; border: none;">
+
+        <div class="modal-header" style="background-color: #1a1a1a; border-radius: 12px 12px 0 0;">
+          <h5 class="modal-title" id="writeReviewLabel"
+              style="color: #fff; font-size: 0.95rem; letter-spacing: 0.05em; text-transform: uppercase;">
+            Write a Review
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-4">
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label"
+              style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #1a1a1a;">
+              Your Name
+            </label>
+            <input type="text" class="form-control" id="reviewerName"
+              placeholder="e.g. Alex S." maxlength="40"
+              style="font-size: 0.88rem; border-color: #ddd;">
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+
+          <!-- Star rating picker -->
+          <div class="mb-3">
+            <label class="form-label d-block"
+              style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #1a1a1a;">
+              Rating
+            </label>
+            <div class="star-picker" id="starPicker">
+              <input type="radio" name="rating" id="star5" value="5"><label for="star5"><i class="bi bi-star-fill"></i></label>
+              <input type="radio" name="rating" id="star4" value="4"><label for="star4"><i class="bi bi-star-fill"></i></label>
+              <input type="radio" name="rating" id="star3" value="3"><label for="star3"><i class="bi bi-star-fill"></i></label>
+              <input type="radio" name="rating" id="star2" value="2"><label for="star2"><i class="bi bi-star-fill"></i></label>
+              <input type="radio" name="rating" id="star1" value="1"><label for="star1"><i class="bi bi-star-fill"></i></label>
+            </div>
+            <div id="ratingError" style="display:none; color:#dc3545; font-size:0.8rem; margin-top:4px;">
+              Please select a rating.
+            </div>
+          </div>
+
+          <!-- Review text -->
+          <div class="mb-1">
+            <label class="form-label"
+              style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #1a1a1a;">
+              Review
+            </label>
+            <textarea class="form-control" id="reviewText" rows="4"
+              placeholder="Share your experience with this product..." maxlength="600"
+              style="font-size: 0.88rem; border-color: #ddd; resize: none;"></textarea>
+            <div class="d-flex justify-content-between mt-1">
+              <div id="reviewTextError" style="display:none; color:#dc3545; font-size:0.8rem;">
+                Please write a review.
+              </div>
+              <span id="charCount" style="font-size: 0.72rem; color: #bbb; margin-left: auto;">0 / 600</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer" style="border-top: 1px solid #f0f0f0;">
+          <button type="button" class="btn btn-sm px-4" data-bs-dismiss="modal"
+            style="border-radius:50rem; font-size:0.8rem; color:#666; border-color:#ddd;">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-submit-review px-4" id="submitReview">
+            Submit Review
+          </button>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // LOAD SELECTED PRODUCT FROM CATALOG
+    let product = null;
+    try {
+      product = JSON.parse(localStorage.getItem('selectedProduct'));
+    } catch (e) {}
+
+    // Derive a stable ID from the product name for per-product review storage
+    function productId(p) {
+      return p.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    }
+
+    // Populate the product summary card
+    function populateProductSummary() {
+      if (!product) {
+        // No product in storage — show fallback banner, hide summary card
+        document.getElementById('productSummary').style.display = 'none';
+        document.getElementById('noProductBanner').style.display = 'block';
+        document.title = 'Reviews';
+        return;
+      }
+
+      document.getElementById('productName').textContent  = product.name;
+      document.getElementById('productLabel').textContent = product.label || '';
+      document.getElementById('productPrice').textContent = '$' + product.price.toFixed(2);
+      document.getElementById('productStars').innerHTML   = starsHTML(product.rating || 0);
+      document.title = product.name + ' — Reviews';
+    }
+
+    // -------------------------------------------------------
+    // PER-PRODUCT STORAGE KEY
+    // Falls back to a generic key if no product is loaded
+    // -------------------------------------------------------
+    const STORAGE_KEY = product
+      ? 'reviews_' + productId(product)
+      : 'reviews_unknown';
+
+    // Seed data — used only on the very first visit for a product
+    const SEED_REVIEWS = [
+      { name: "Jordan M.", rating: 5, text: "Absolutely love this product. Build quality is excellent and it works perfectly with my setup.", date: "Apr 10, 2026" },
+      { name: "Sam T.",    rating: 4, text: "Great value for money. Setup was easy and the performance is solid. Would recommend.", date: "Apr 14, 2026" }
+    ];
+
+    // STORAGE HELPERS
+    function loadReviews() {
+      try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function saveReviews(reviews) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+      } catch (e) {
+        console.warn('Could not save reviews to localStorage:', e);
+      }
+    }
+
+    // Load reviews; seed only on first visit for this product
+    let reviews = loadReviews();
+    if (reviews === null) {
+      reviews = product ? SEED_REVIEWS : [];
+      saveReviews(reviews);
+    }
+
+    // HELPERS
+    function starsHTML(rating) {
+      let html = '';
+      for (let i = 1; i <= 5; i++) {
+        html += `<i class="bi bi-star${i <= rating ? '-fill' : ''}"></i>`;
+      }
+      return html;
+    }
+
+    function initials(name) {
+      return name.trim().split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+    }
+
+    // RENDER
+    function renderReviews() {
+      const list  = document.getElementById('reviewList');
+      const empty = document.getElementById('emptyState');
+      const count = document.getElementById('reviewCount');
+
+      count.textContent = reviews.length + (reviews.length === 1 ? ' review' : ' reviews');
+
+      if (reviews.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      list.innerHTML = reviews.map((r, i) => `
+        <div class="d-flex gap-3 mb-4 review-entry" id="review-${i}">
+          <div class="avatar-placeholder">${initials(r.name)}</div>
+          <div class="flex-grow-1">
+            <div class="reviewer-name">${r.name}</div>
+            <div class="review-date">${r.date}</div>
+            <div class="star-rating fs-6 mb-2">${starsHTML(r.rating)}</div>
+            <div class="review-box">${r.text}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // CHAR COUNTER
+    document.getElementById('reviewText').addEventListener('input', function () {
+      document.getElementById('charCount').textContent = this.value.length + ' / 600';
+    });
+
+    // SUBMIT
+    document.getElementById('submitReview').addEventListener('click', () => {
+      const nameEl   = document.getElementById('reviewerName');
+      const textEl   = document.getElementById('reviewText');
+      const ratingEl = document.querySelector('input[name="rating"]:checked');
+      let valid = true;
+
+      if (!nameEl.value.trim()) {
+        nameEl.classList.add('is-invalid');
+        valid = false;
+      } else {
+        nameEl.classList.remove('is-invalid');
+      }
+
+      if (!ratingEl) {
+        document.getElementById('ratingError').style.display = 'block';
+        valid = false;
+      } else {
+        document.getElementById('ratingError').style.display = 'none';
+      }
+
+      if (!textEl.value.trim()) {
+        textEl.classList.add('is-invalid');
+        document.getElementById('reviewTextError').style.display = 'block';
+        valid = false;
+      } else {
+        textEl.classList.remove('is-invalid');
+        document.getElementById('reviewTextError').style.display = 'none';
+      }
+
+      if (!valid) return;
+
+      const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      reviews.unshift({
+        name:   nameEl.value.trim(),
+        rating: parseInt(ratingEl.value),
+        text:   textEl.value.trim(),
+        date:   today
+      });
+
+      saveReviews(reviews);
+      renderReviews();
+
+      // Reset form & close modal
+      nameEl.value = '';
+      textEl.value = '';
+      document.getElementById('charCount').textContent = '0 / 600';
+      document.querySelectorAll('input[name="rating"]').forEach(r => r.checked = false);
+      bootstrap.Modal.getInstance(document.getElementById('writeReviewModal')).hide();
+    });
+
+    // Clear validation state on modal close
+    document.getElementById('writeReviewModal').addEventListener('hidden.bs.modal', () => {
+      document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+      document.getElementById('ratingError').style.display = 'none';
+      document.getElementById('reviewTextError').style.display = 'none';
+    });
+
+    populateProductSummary();
+    renderReviews();
+  </script>
 </body>
 </html>

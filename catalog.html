@@ -172,16 +172,54 @@
       text-decoration: underline;
       text-underline-offset: 4px;
     }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 767px) {
+      /* Sidebar becomes a slide-in overlay drawer */
+      #sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100% !important;
+        z-index: 1045;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        width: 240px !important;
+        min-width: 240px !important;
+        box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+        overflow-y: auto;
+      }
+      #sidebar.open {
+        transform: translateX(0);
+      }
+      /* Dim overlay behind sidebar */
+      #sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 1044;
+      }
+      #sidebar-overlay.show { display: block; }
+
+      /* Cards: 2 columns on mobile */
+      .row-cols-3 > .col { width: 50% !important; }
+    }
+
+    @media (max-width: 400px) {
+      /* 1 column on very small screens */
+      .row-cols-3 > .col { width: 100% !important; }
+    }
   </style>
 </head>
-<body class="vh-100 d-flex flex-column overflow-hidden" style="background-color: #ffffff; color: #1a1a1a;">
+<body style="background-color: #ffffff; color: #1a1a1a; display: flex; flex-direction: column; min-height: 100vh;">
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg border-bottom">
     <div class="container-fluid">
       <div class="navbar-collapse">
         <div class="d-flex align-items-center me-3">
-          <button class="btn btn-outline-secondary p-1" style="line-height:1; font-size:0.8rem;" onclick="document.getElementById('sidebar').classList.toggle('d-none')" aria-label="Toggle Filters">
+          <button class="btn btn-outline-secondary p-1" style="line-height:1; font-size:0.8rem;" onclick="toggleSidebar()" aria-label="Toggle Filters">
             <i class="bi bi-layout-sidebar" style="font-size:0.95rem;"></i>
           </button>
         </div>
@@ -214,7 +252,9 @@
     </div>
   </nav>
 
-  <div class="d-flex flex-grow-1 overflow-hidden">
+  <div style="display: flex; flex: 1; overflow: hidden; position: relative;">
+  <!-- Sidebar overlay (mobile) -->
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
 
     <!-- Sidebar -->
     <div id="sidebar" class="p-3 overflow-y-auto" style="width: 200px; min-width: 200px; background-color: #f4f4f4; border-right: 1px solid #e0e0e0;">
@@ -288,7 +328,7 @@
     </div>
 
     <!-- Main content -->
-    <div class="p-3 flex-grow-1 overflow-y-auto" style="background-color: #ffffff;">
+    <div class="p-3 flex-grow-1" style="background-color: #ffffff; overflow-y: auto; overflow-x: hidden;">
       <div style="max-width: 900px; margin: 0 auto;">
       <h5 id="deals" class="text-center section-heading mb-3">Our Deals</h5>
       <div class="deals-banner mb-4"></div>
@@ -464,6 +504,23 @@
 
     // Initial render
     renderCards(products);
+
+    // Sidebar toggle (desktop: hide/show, mobile: slide drawer)
+    function toggleSidebar() {
+      const sidebar  = document.getElementById('sidebar');
+      const overlay  = document.getElementById('sidebar-overlay');
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) {
+        sidebar.classList.toggle('open');
+        overlay.classList.toggle('show');
+      } else {
+        sidebar.style.display = sidebar.style.display === 'none' ? '' : 'none';
+      }
+    }
+    function closeSidebar() {
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('sidebar-overlay').classList.remove('show');
+    }
 
     // Save clicked product to recentlyViewed in localStorage
     document.getElementById('productGrid').addEventListener('click', function(e) {
