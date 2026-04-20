@@ -33,31 +33,6 @@ function saveCart(cart) {
   localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 }
 
-function seedCartIfEmpty() {
-  const existing = loadCart();
-  if (existing && existing.length) return existing;
-  const seed = [
-    {
-      id: "gpu",
-      name: "Graphics Card",
-      price: 300,
-      qty: 1,
-      image: "https://placehold.co/64x64?text=GPU",
-      alt: "Graphics Card",
-    },
-    {
-      id: "cpu",
-      name: "CPU",
-      price: 200,
-      qty: 1,
-      image: "https://placehold.co/64x64?text=CPU",
-      alt: "CPU",
-    },
-  ];
-  saveCart(seed);
-  return seed;
-}
-
 function cartTotal(cart) {
   return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 }
@@ -266,7 +241,7 @@ function attachCartHandlers() {
 }
 
 function initCart() {
-  const cart = seedCartIfEmpty();
+  const cart = loadCart() ?? [];
   renderCart(cart);
   attachCartHandlers();
 }
