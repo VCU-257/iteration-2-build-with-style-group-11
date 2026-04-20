@@ -28,7 +28,7 @@
 <body>
 
   <!-- Navbar from Teamate-->
-  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg bg-primary border-bottom sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
       <div class="navbar-collapse">
         <ul class="navbar-nav me-auto mb-0">
@@ -117,7 +117,7 @@
       <button class="btn btn-outline-secondary" id="compareBtn">Compare</button>
     </div>
 
-    <div class="card">
+    <div class="card mb-5">
       <div class="card-header">Reviews</div>
         <div class="card-body" id="item-reviews">
           <p>No reviews yet.</p>
@@ -142,10 +142,10 @@
   </div>
 </div>
 
-<footer class="bg-white mt-3 bg-opacity-25 py-2 px-4">
-  <a href="#" class="text-muted small me-4">Customer Service</a>
-  <a href="#" class="text-muted small me-4">Privacy Policy</a>
-  <a href="#" class="text-muted small">About US</a>
+<footer class="py-3 px-4 mt-auto" style="background-color:#343A40;">
+  <a href="#" class="text-white text-decoration-none small me-4">Customer Service</a>
+  <a href="#" class="text-white text-decoration-none small me-4">Privacy Policy</a>
+  <a href="#" class="text-white text-decoration-none small">About US</a>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -204,18 +204,23 @@
 </script>
 
 <script>
-  // Cart badge id Get linked to this
+  function addToCart(name, price) {
+    const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    let cart = [];
+    try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+    const existing = cart.find(i => i.id === id);
+    if (existing) { existing.qty += 1; } else { cart.push({ id, name, price: parseFloat(price), qty: 1, image: '', alt: name }); }
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
 
-  // Listen for an for a cartBtn id is being clicked on
-  document.getElementById('cartBtn').addEventListener('click', function(Checker) {
-    Checker.preventDefault();
-    // Get the cart badge element from the navbar
+  document.getElementById('cartBtn').addEventListener('click', function() {
+    if (!selectedProduct) return;
+    addToCart(selectedProduct.name, selectedProduct.price);
     const badge = document.getElementById('cartBadge');
-    // Make the badge visible by removing the 'd-none' class
     badge.classList.remove('d-none');
-    let count = parseInt(badge.textContent) || 0;
-    // Increment the count by 1 and update the badge text
-    badge.textContent = count + 1;
+    let cart = [];
+    try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+    badge.textContent = cart.reduce((sum, i) => sum + i.qty, 0);
   });
 
   // Compare button — add to compareList (max 4) then navigate
@@ -234,34 +239,47 @@
     window.location.href = 'compare.html';
   });
 
-  // Wishlist button toggle on/off
+  // Wishlist button — backed by localStorage
   const wishlistBtn = document.getElementById('wishlistBtn');
-  let wishlisted = false;
+  const badge = document.getElementById('wishlistBadge');
+  const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
 
-  // Wishlit badge id Get linked to this
+  function getWishlist() {
+    return JSON.parse(localStorage.getItem('wishlist')) || [];
+  }
 
-  //check for an for a wishlistBtn id is being clicked on
-  wishlistBtn.addEventListener('click', function() {
-    // Flip the wishlisted state on each click
-    wishlisted = !wishlisted;
-    //Gets the wishlist badge from the navbar
-    const badge = document.getElementById('wishlistBadge');
-
+  function setWishlistState(wishlisted) {
     if (wishlisted) {
-      //// Item added to wishlist — switch button to green with checkmark
       wishlistBtn.classList.remove('btn-outline-secondary');
       wishlistBtn.classList.add('btn-success');
       wishlistBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>In Wishlist';
-      // Show the wishlist badge in the navbar
       badge.classList.remove('d-none');
     } else {
-      // Item removed from wishlist — reset button back to default
       wishlistBtn.classList.remove('btn-success');
       wishlistBtn.classList.add('btn-outline-secondary');
       wishlistBtn.innerHTML = 'Add to Wishlist';
-      // Hide the wishlist badge in the navbar
       badge.classList.add('d-none');
     }
+  }
+
+  // Set initial button state based on localStorage
+  if (selectedProduct) {
+    const already = getWishlist().some(i => i.name === selectedProduct.name);
+    setWishlistState(already);
+  }
+
+  wishlistBtn.addEventListener('click', function() {
+    if (!selectedProduct) return;
+    let list = getWishlist();
+    const idx = list.findIndex(i => i.name === selectedProduct.name);
+    if (idx === -1) {
+      list.unshift({ name: selectedProduct.name, price: '$' + selectedProduct.price.toFixed(2), href: selectedProduct.link, label: selectedProduct.label });
+      setWishlistState(true);
+    } else {
+      list.splice(idx, 1);
+      setWishlistState(false);
+    }
+    localStorage.setItem('wishlist', JSON.stringify(list));
   });
 </script>
 </body>
