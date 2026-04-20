@@ -96,21 +96,21 @@
           return;
         }
         container.innerHTML = list.map(item => `
-          <div class="wishlist-row d-flex align-items-center bg-secondary bg-opacity-25 rounded-3 p-3 mb-3 position-relative">
+          <div class="wishlist-row rounded-3 bg-secondary bg-opacity-25 p-3 mb-3 position-relative">
             <a href="${item.href}" class="stretched-link"></a>
-            <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:110px; height:80px; font-size:1rem;">
-              Picture<br>of Item
-            </div>
-            <div class="flex-grow-1 px-4">
-              <p class="mb-0 fw-semibold">${item.name}</p>
-              <p class="mb-0 text-muted small">${item.label || ''}</p>
-            </div>
-            <div class="d-flex align-items-center gap-3 flex-shrink-0 pe-5 position-relative z-index-top">
-              <p class="mb-0 fw-bold">${item.price}</p>
-              <div class="d-flex flex-column gap-2">
-                <a class="btn btn-light border rounded-pill" href="checkout.html">Buy Now</a>
-                <button class="btn btn-light border rounded-pill add-to-cart-btn">Add to Cart</button>
+            <div class="d-flex align-items-center gap-3">
+              <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:90px; height:70px; font-size:0.85rem;">
+                Picture<br>of Item
               </div>
+              <div class="flex-grow-1">
+                <p class="mb-0 fw-semibold">${item.name}</p>
+                <p class="mb-0 text-muted small">${item.label || ''}</p>
+                <p class="mb-0 fw-bold mt-1">${item.price}</p>
+              </div>
+            </div>
+            <div class="d-flex gap-2 mt-3 position-relative z-index-top">
+              <a class="btn btn-light border rounded-pill btn-sm" href="checkout.html">Buy Now</a>
+              <button class="btn btn-light border rounded-pill btn-sm add-to-cart-btn">Add to Cart</button>
             </div>
             <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute top-0 end-0 m-2 z-index-top remove-btn" data-name="${item.name}" style="width:28px;height:28px;padding:0;line-height:1;">
               &#x2715;

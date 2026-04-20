@@ -72,8 +72,9 @@
     </div>
   </nav>
 
-<div class="container-fluid mt-3 d-flex justify-content-center">
-  <div class="col-md-10">
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10">
 
     <div class="card mb-3">
       <div class="card-body text-center">
@@ -88,7 +89,8 @@
           </div>
         </div>
       </div>
-    </div>
+  </div>
+  </div>
 
     <div class="d-flex justify-content-between mb-3">
       <h4 id="item-name">Item Name</h4>
@@ -113,26 +115,15 @@
       </div>
     </div>
 
-    <div class="d-flex gap-2 mb-4">
-      <!-- Added a ID to the Add button for JS -->
+    <div class="d-flex flex-wrap gap-2 mb-4">
       <button class="btn btn-primary" id="cartBtn">Add to Cart</button>
-      <a class="btn btn-success" href="checkout.html">Buy Now</a>
-      <!-- Added a ID to the Add Wishlist for JS -->
+      <a class="btn btn-success text-nowrap" href="checkout.html">Buy Now</a>
       <button class="btn btn-outline-secondary" id="wishlistBtn">Add to Wishlist</button>
       <button class="btn btn-outline-secondary" id="compareBtn">Compare</button>
       <a class="btn btn-outline-secondary" href="review.html">
-        <i class="bi bi-pencil-square me-1"></i>Write a Review
+        <i class="bi bi-pencil-square me-1"></i>Reviews
       </a>
     </div>
-
-    <div class="card mb-5">
-      <div class="card-header">Reviews</div>
-        <div class="card-body" id="item-reviews">
-          <p>No reviews yet.</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
 <div class="modal fade" id="fullViewModal" tabindex="-1" aria-labelledby="fullViewModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -162,16 +153,6 @@
   // Populate page from selectedProduct saved by catalog.html
   const deviceLabels = { pc: 'PC', playstation: 'PlayStation', xbox: 'Xbox', nintendo: 'Nintendo Switch', mobile: 'Mobile' };
   const compatLabels = { wired: 'Wired', wireless: 'Wireless', bluetooth: 'Bluetooth', 'usb-c': 'USB-C', 'usb-a': 'USB-A' };
-
-  function starsHTML(rating) {
-    let html = '';
-    for (let i = 1; i <= 5; i++) {
-      if (rating >= i)            html += '<i class="bi bi-star-fill" style="color:#058531;"></i>';
-      else if (rating >= i - 0.5) html += '<i class="bi bi-star-half" style="color:#058531;"></i>';
-      else                        html += '<i class="bi bi-star" style="color:#058531;"></i>';
-    }
-    return html;
-  }
 
   const product = JSON.parse(localStorage.getItem('selectedProduct'));
   if (product) {
