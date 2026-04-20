@@ -65,7 +65,83 @@ p, a, span, li, input, button, label, small {
   vertical-align: middle;
 }
 
-.cart-qty {
-  width: 7.5rem;
+/* Cart quantity control: trash | qty | + (square, black border) */
+.cart-qty-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  min-width: 9.25rem;
+  max-width: 100%;
+  padding: 0.4rem 0.65rem;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+.cart-qty-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.25rem 0.4rem;
+  border: none;
+  background: transparent;
+  color: #000000;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.cart-qty-pill-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.cart-qty-pill-btn:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+.cart-qty-pill .bi-trash {
+  font-size: 1.1rem;
+}
+
+.cart-qty-value {
+  flex: 1;
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.cart-qty-plus {
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #000000;
+}
+
+.cart-table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cart-table-responsive table {
+  min-width: 24rem;
+}
+
+@media (max-width: 575.98px) {
+  .cart-qty-pill {
+    min-width: 8.5rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .cart-table-responsive .table th,
+  .cart-table-responsive .table td {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
