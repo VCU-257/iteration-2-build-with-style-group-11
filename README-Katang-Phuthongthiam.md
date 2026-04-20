@@ -22,6 +22,9 @@ The AI helped clarify certain concepts and gave me ideas on how to approach spec
 
 ## 3. Live Site Link
 
+- **Live Link:**
+  https://vcu-257.github.io/iteration-2-build-with-style-group-11/
+
 - **Cart Page:**
   https://vcu-257.github.io/iteration-2-build-with-style-group-11/checkout.html
 
