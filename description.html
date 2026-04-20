@@ -30,7 +30,14 @@
   <!-- Navbar from Teamate-->
   <nav class="navbar navbar-expand-lg bg-primary border-bottom sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
-      <div class="navbar-collapse">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#mainNav" aria-controls="mainNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav me-auto mb-0">
           <li class="nav-item">
             <a class="nav-link" href="index.html">HOME</a>
@@ -38,8 +45,11 @@
           <li class="nav-item">
             <a class="nav-link fw-bold active" href="catalog.html#deals">CATALOG/PRODUCT</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="wishlist.html">WISHLIST</a>
+          <li class="nav-item position-relative">
+            <a class="nav-link" href="wishlist.html">
+              WISHLIST
+              <span id="wishlistBadge" class="badge rounded-pill bg-danger d-none ms-1">1</span>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="catalog.html#deals">DEALS</a>
@@ -54,13 +64,8 @@
           </div>
           <a class="btn btn-outline-secondary rounded-circle position-relative" href="Cart.html" aria-label="Cart">
             <!-- Added a notification badge -->
-            <i class="bi bi-cart"></i>
-            <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
-          </a>
-          <a class="btn btn-outline-secondary rounded-circle position-relative" href="wishlist.html" aria-label="Wishlist">
-            <!-- Added a notification badge -->
             <i class="bi bi-bag-heart-fill"></i>
-            <span id="wishlistBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">1</span>
+            <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
           </a>
         </div>
       </div>
@@ -115,6 +120,9 @@
       <!-- Added a ID to the Add Wishlist for JS -->
       <button class="btn btn-outline-secondary" id="wishlistBtn">Add to Wishlist</button>
       <button class="btn btn-outline-secondary" id="compareBtn">Compare</button>
+      <a class="btn btn-outline-secondary" href="review.html">
+        <i class="bi bi-pencil-square me-1"></i>Write a Review
+      </a>
     </div>
 
     <div class="card mb-5">

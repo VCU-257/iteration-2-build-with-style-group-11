@@ -28,7 +28,14 @@
 <!-- AI added the Theme throughout the navbar of Lux -->
 <nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
-        <div class="navbar-collapse">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+          data-bs-target="#mainNav" aria-controls="mainNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav me-auto mb-0">
             <li class="nav-item">
                 <a class="nav-link" href="index.html">HOME</a>
@@ -52,13 +59,8 @@
             </div>
             <a class="btn btn-outline-secondary rounded-circle position-relative" href="Cart.html" aria-label="Cart">
                 <!-- Added a notification badge -->
-                <i class="bi bi-cart"></i>
-                <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">1</span>
-            </a>
-            <a class="btn btn-outline-secondary rounded-circle position-relative" href="wishlist.html" aria-label="Wishlist">
-                <!-- Added a notification badge -->
                 <i class="bi bi-bag-heart-fill"></i>
-                <span id="wishlistBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
+                <span id="cartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">1</span>
             </a>
             </div>
         </div>
