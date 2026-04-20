@@ -23,8 +23,13 @@
     /* Primary: #1A1A1A bg / #FFFFFF font */
     body { background-color: #FFFFFF; color: #1A1A1A; }
     .navbar-custom { background-color: #1A1A1A !important; }
-    .navbar-custom .nav-link { color: #FFFFFF !important; }
-    .navbar-custom .nav-link:hover { opacity: 0.8; }
+    .navbar-custom .nav-link { color: rgba(255,255,255,0.75) !important; font-weight: 600; letter-spacing: 0.04em; font-size: 0.85rem; }
+    .navbar-custom .nav-link:hover, .navbar-custom .nav-link.active { color: #ffffff !important; }
+    .navbar-custom .btn-outline-secondary { color: #ffffff !important; border-color: rgba(255,255,255,0.4) !important; }
+    .navbar-custom .btn-outline-secondary:hover { background-color: rgba(255,255,255,0.1) !important; color: #ffffff !important; border-color: #ffffff !important; }
+    .navbar-custom .form-control { background-color: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); color: #ffffff; }
+    .navbar-custom .form-control::placeholder { color: rgba(255,255,255,0.5); }
+    .navbar-custom .form-control:focus { background-color: rgba(255,255,255,0.15); color: #ffffff; border-color: rgba(255,255,255,0.6); box-shadow: none; }
     .btn-primary { background-color: #1A1A1A !important; border-color: #1A1A1A !important; color: #FFFFFF !important; }
     .btn-primary:hover { background-color: #333333 !important; border-color: #333333 !important; }
 
@@ -42,7 +47,7 @@
 <body class="d-flex flex-column min-vh-100">
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom border-bottom">
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom border-bottom sticky-top">
     <div class="container-fluid">
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -50,7 +55,7 @@
       <div class="collapse navbar-collapse" id="navbarMain">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">HOME</a>
+            <a class="nav-link" href="index.html" aria-current="page">HOME</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="catalog.html">CATALOG</a>
@@ -96,7 +101,8 @@
 
     <!-- Recently Viewed: col-lg-3 desktop (4/row), col-6 mobile (2/row) -->
     <h5 class="fw-bold mb-3">Recently Viewed</h5>
-    <div class="row g-3 mb-5">
+    <div class="row g-3 mb-5" id="recently-viewed-cards">
+      <!-- Populated from localStorage by script below; placeholders shown as fallback -->
       <div class="col-6 col-lg-3">
         <a class="card" href="description.html">
           <div class="ratio ratio-16x9 bg-secondary"></div>
@@ -121,7 +127,8 @@
 
     <!-- Wish List: col-lg-3 desktop (4/row), col-6 mobile (2/row) -->
     <h5 class="fw-bold mb-3">Wish list</h5>
-    <div class="row g-3">
+    <div class="row g-3" id="wishlist-cards">
+      <!-- Populated from localStorage by script below; placeholders shown as fallback -->
       <div class="col-6 col-lg-3">
         <a class="card" href="description.html">
           <div class="ratio ratio-16x9 bg-secondary"></div>
@@ -157,12 +164,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // On mobile viewports, HOME nav link routes to catalog (catalog acts as front page)
-    if (window.innerWidth < 992) {
-      const homeLink = document.querySelector('.navbar-nav .nav-link[href="index.html"]');
-      if (homeLink) homeLink.href = 'catalog.html';
-    }
-
     // Active link highlighting based on current page
     const pageAliases = { 'compare.html': 'catalog.html' };
     const rawPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -171,11 +172,49 @@
       const linkHref = link.getAttribute('href');
       if (!linkHref.includes('#') && linkHref === currentPage) {
         link.classList.add('active', 'fw-bold');
-        link.style.color = '#058531';
-        link.style.borderBottom = '2px solid #058531';
+        link.style.color = '#ffffff';
       }
     });
 
+    // On mobile viewports, HOME nav link routes to catalog (catalog acts as front page)
+    if (window.innerWidth < 992) {
+      const homeLink = document.querySelector('.navbar-nav .nav-link[href="index.html"]');
+      if (homeLink) homeLink.href = 'catalog.html';
+    }
+
+    // Populate Recently Viewed section from localStorage (saved by catalog.html)
+    function buildCard(item) {
+      const col = document.createElement('div');
+      col.className = 'col-6 col-lg-3';
+      col.innerHTML = `
+        <a class="card text-decoration-none" href="${item.href}">
+          <div class="ratio ratio-16x9 bg-secondary d-flex align-items-center justify-content-center">
+            <span class="text-white small text-center p-1">Picture of Item</span>
+          </div>
+          <div class="card-body p-2">
+            <p class="card-text small text-truncate mb-0">${item.name}</p>
+            <p class="card-text small fw-bold mb-0">${item.price}</p>
+          </div>
+        </a>`;
+      return col;
+    }
+
+    const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+    const top4Recent = recentlyViewed.slice(0, 4);
+    const recentContainer = document.getElementById('recently-viewed-cards');
+    if (recentContainer && top4Recent.length > 0) {
+      recentContainer.innerHTML = '';
+      top4Recent.forEach(item => recentContainer.appendChild(buildCard(item)));
+    }
+
+    // Populate Wish List section from localStorage (saved by wishlist.html)
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    const top4 = wishlist.slice(0, 4);
+    const container = document.getElementById('wishlist-cards');
+    if (container && top4.length > 0) {
+      container.innerHTML = '';
+      top4.forEach(item => container.appendChild(buildCard(item)));
+    }
   </script>
 </body>
 </html>

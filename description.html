@@ -28,7 +28,7 @@
 <body>
 
   <!-- Navbar from Teamate-->
-  <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg bg-primary border-bottom sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
       <div class="navbar-collapse">
         <ul class="navbar-nav me-auto mb-0">
@@ -86,21 +86,21 @@
     </div>
 
     <div class="d-flex justify-content-between mb-3">
-      <h4>Item Name</h4>
-      <h4>$x</h4>
+      <h4 id="item-name">Item Name</h4>
+      <h4 id="item-price">$x</h4>
     </div>
 
     <div class="card mb-3">
       <div class="card-header">Description</div>
       <div class="card-body">
-        <p>This is the item description.</p>
+        <p id="item-description">This is the item description.</p>
       </div>
     </div>
 
     <div class="card mb-3">
       <div class="card-header">Specifications</div>
       <div class="card-body">
-        <ul>
+        <ul id="item-specs">
           <li>Spec 1</li>
           <li>Spec 2</li>
           <li>Spec 3</li>
@@ -114,12 +114,12 @@
       <a class="btn btn-success" href="checkout.html">Buy Now</a>
       <!-- Added a ID to the Add Wishlist for JS -->
       <button class="btn btn-outline-secondary" id="wishlistBtn">Add to Wishlist</button>
-      <a class="btn btn-outline-secondary" href="compare.html">Compare</a>
+      <button class="btn btn-outline-secondary" id="compareBtn">Compare</button>
     </div>
 
-    <div class="card">
+    <div class="card mb-5">
       <div class="card-header">Reviews</div>
-        <div class="card-body">
+        <div class="card-body" id="item-reviews">
           <p>No reviews yet.</p>
         </div>
       </div>
@@ -142,57 +142,144 @@
   </div>
 </div>
 
-<footer class="bg-white mt-3 bg-opacity-25 py-2 px-4">
-  <a href="#" class="text-muted small me-4">Customer Service</a>
-  <a href="#" class="text-muted small me-4">Privacy Policy</a>
-  <a href="#" class="text-muted small">About US</a>
+<footer class="py-3 px-4 mt-auto" style="background-color:#343A40;">
+  <a href="#" class="text-white text-decoration-none small me-4">Customer Service</a>
+  <a href="#" class="text-white text-decoration-none small me-4">Privacy Policy</a>
+  <a href="#" class="text-white text-decoration-none small">About US</a>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  // Cart badge id Get linked to this
+  // Populate page from selectedProduct saved by catalog.html
+  const deviceLabels = { pc: 'PC', playstation: 'PlayStation', xbox: 'Xbox', nintendo: 'Nintendo Switch', mobile: 'Mobile' };
+  const compatLabels = { wired: 'Wired', wireless: 'Wireless', bluetooth: 'Bluetooth', 'usb-c': 'USB-C', 'usb-a': 'USB-A' };
 
-  // Listen for an for a cartBtn id is being clicked on
-  document.getElementById('cartBtn').addEventListener('click', function(Checker) {
-    Checker.preventDefault();
-    // Get the cart badge element from the navbar
+  function starsHTML(rating) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i)            html += '<i class="bi bi-star-fill" style="color:#058531;"></i>';
+      else if (rating >= i - 0.5) html += '<i class="bi bi-star-half" style="color:#058531;"></i>';
+      else                        html += '<i class="bi bi-star" style="color:#058531;"></i>';
+    }
+    return html;
+  }
+
+  const product = JSON.parse(localStorage.getItem('selectedProduct'));
+  if (product) {
+    // Name, price, page title
+    document.getElementById('item-name').textContent = product.name;
+    document.getElementById('item-price').textContent = '$' + product.price.toFixed(2);
+    document.title = product.name;
+
+    // Description
+    document.getElementById('item-description').textContent = product.label;
+
+    // Specs: devices + compats
+    const specs = [
+      ...product.devices.map(d => 'Device: ' + (deviceLabels[d] || d)),
+      ...product.compats.map(c => 'Compatibility: ' + (compatLabels[c] || c))
+    ];
+    document.getElementById('item-specs').innerHTML = specs.map(s => `<li>${s}</li>`).join('');
+
+    // Reviews: one review matching the rating
+    const reviewTemplates = {
+      5:   '"Absolutely perfect — best purchase I\'ve made. Couldn\'t be happier."',
+      4.5: '"Almost flawless, minor packaging issue but the product itself is excellent."',
+      4:   '"Really solid product, does exactly what it says. Would recommend."',
+      3.5: '"Pretty good overall, a few small quirks but nothing deal-breaking."',
+      3:   '"Decent for the price, meets expectations but nothing outstanding."',
+      2.5: '"Mixed feelings — some things work well, others not so much."',
+      2:   '"Below average, had some issues out of the box."',
+      1:   '"Very disappointing, did not meet expectations at all."'
+    };
+    const reviewText = reviewTemplates[product.rating] || reviewTemplates[3];
+    document.getElementById('item-reviews').innerHTML = `
+      <div class="mb-1">
+        <strong>Verified Buyer</strong>
+        <div class="my-1">${starsHTML(product.rating)}</div>
+        <p class="mb-0">${reviewText}</p>
+      </div>`;
+  }
+</script>
+
+<script>
+  function addToCart(name, price) {
+    const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    let cart = [];
+    try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+    const existing = cart.find(i => i.id === id);
+    if (existing) { existing.qty += 1; } else { cart.push({ id, name, price: parseFloat(price), qty: 1, image: '', alt: name }); }
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  document.getElementById('cartBtn').addEventListener('click', function() {
+    if (!selectedProduct) return;
+    addToCart(selectedProduct.name, selectedProduct.price);
     const badge = document.getElementById('cartBadge');
-    // Make the badge visible by removing the 'd-none' class
     badge.classList.remove('d-none');
-    let count = parseInt(badge.textContent) || 0;
-    // Increment the count by 1 and update the badge text
-    badge.textContent = count + 1;
+    let cart = [];
+    try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+    badge.textContent = cart.reduce((sum, i) => sum + i.qty, 0);
   });
 
-  // Wishlist button toggle on/off
+  // Compare button — add to compareList (max 4) then navigate
+  document.getElementById('compareBtn').addEventListener('click', function() {
+    const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    if (!product) { window.location.href = 'compare.html'; return; }
+    let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+    if (!compareList.find(p => p.name === product.name)) {
+      if (compareList.length >= 4) {
+        alert('Maximum 4 items can be compared. Remove one from the compare page first.');
+        return;
+      }
+      compareList.push(product);
+      localStorage.setItem('compareList', JSON.stringify(compareList));
+    }
+    window.location.href = 'compare.html';
+  });
+
+  // Wishlist button — backed by localStorage
   const wishlistBtn = document.getElementById('wishlistBtn');
-  let wishlisted = false;
+  const badge = document.getElementById('wishlistBadge');
+  const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
 
-  // Wishlit badge id Get linked to this
+  function getWishlist() {
+    return JSON.parse(localStorage.getItem('wishlist')) || [];
+  }
 
-  //check for an for a wishlistBtn id is being clicked on
-  wishlistBtn.addEventListener('click', function() {
-    // Flip the wishlisted state on each click
-    wishlisted = !wishlisted;
-    //Gets the wishlist badge from the navbar
-    const badge = document.getElementById('wishlistBadge');
-
+  function setWishlistState(wishlisted) {
     if (wishlisted) {
-      //// Item added to wishlist — switch button to green with checkmark
       wishlistBtn.classList.remove('btn-outline-secondary');
       wishlistBtn.classList.add('btn-success');
       wishlistBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>In Wishlist';
-      // Show the wishlist badge in the navbar
       badge.classList.remove('d-none');
     } else {
-      // Item removed from wishlist — reset button back to default
       wishlistBtn.classList.remove('btn-success');
       wishlistBtn.classList.add('btn-outline-secondary');
       wishlistBtn.innerHTML = 'Add to Wishlist';
-      // Hide the wishlist badge in the navbar
       badge.classList.add('d-none');
     }
+  }
+
+  // Set initial button state based on localStorage
+  if (selectedProduct) {
+    const already = getWishlist().some(i => i.name === selectedProduct.name);
+    setWishlistState(already);
+  }
+
+  wishlistBtn.addEventListener('click', function() {
+    if (!selectedProduct) return;
+    let list = getWishlist();
+    const idx = list.findIndex(i => i.name === selectedProduct.name);
+    if (idx === -1) {
+      list.unshift({ name: selectedProduct.name, price: '$' + selectedProduct.price.toFixed(2), href: selectedProduct.link, label: selectedProduct.label });
+      setWishlistState(true);
+    } else {
+      list.splice(idx, 1);
+      setWishlistState(false);
+    }
+    localStorage.setItem('wishlist', JSON.stringify(list));
   });
 </script>
 </body>

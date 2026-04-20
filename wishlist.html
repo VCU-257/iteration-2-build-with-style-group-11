@@ -26,7 +26,7 @@
 
 <body class="d-flex flex-column min-vh-100">
 <!-- AI added the Theme throughout the navbar of Lux -->
-<nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
+<nav class="navbar navbar-expand-lg bg-primary sticky-top" data-bs-theme="dark">
     <div class="container-fluid">
         <div class="navbar-collapse">
             <ul class="navbar-nav me-auto mb-0">
@@ -65,147 +65,87 @@
     </div>
 </nav>
 
-    <main class="flex-grow-1 py-4 px-4">
-
-        <!-- This the 1st wishlist item -->
-        <div class="wishlist-row d-flex align-items-center bg-secondary bg-opacity-25 rounded-3 p-3 mb-3 position-relative">
-            
-            <a href="description.html" class="stretched-link"></a>
-
-            <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:110px; height:80px; font-size:1rem;">
-                Picture<br>of Item
-            </div>
-
-            <div class="flex-grow-1 px-4">
-                <p class="mb-0">Description of Item</p>
-            </div>
-
-            <div class="d-flex align-items-center gap-3 flex-shrink-0 pe-5 position-relative z-index-top">
-                <p class="mb-0 fw-bold">$x1</p>
-                <div class="d-flex flex-column gap-2">
-                    <a class="btn btn-light border rounded-pill" href="checkout.html">
-                        Buy Now
-                    </a>
-                    <button class="btn btn-light border rounded-pill add-to-cart-btn">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-            
-            <!-- added a remove-btn class for JS-->
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute top-0 end-0 m-2 z-index-top remove-btn" style="width:28px;height:28px;padding:0;line-height:1;">
-                &#x2715;
-            </button>
-        </div>
-
-        <!-- This the 2nd wishlist item -->
-        <div class="wishlist-row d-flex align-items-center bg-secondary bg-opacity-25 rounded-3 p-3 mb-3 position-relative">
-            <a href="description.html" class="stretched-link"></a>
-            <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:110px; height:80px;">
-                Picture<br>of Item
-            </div>
-            <div class="flex-grow-1 px-4"><p class="mb-0">Description</p></div>
-            <div class="d-flex align-items-center gap-3 flex-shrink-0 pe-5 position-relative z-index-top">
-                <p class="mb-0 fw-bold">$x2</p>
-                <div class="d-flex flex-column gap-2">
-                    <a class="btn btn-light border rounded-pill" href="checkout.html">
-                        Buy Now
-                    </a>
-                    <button class="btn btn-light border rounded-pill add-to-cart-btn">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-            <!-- added a remove-btn class for JS-->
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute top-0 end-0 m-2 z-index-top remove-btn" style="width:28px;height:28px;padding:0;line-height:1;">
-                &#x2715;
-            </button>
-        </div>
-
-        <!-- This the 3rd wishlist item -->
-        <div class="wishlist-row d-flex align-items-center bg-secondary bg-opacity-25 rounded-3 p-3 mb-3 position-relative">
-            <a href="description.html" class="stretched-link"></a>
-            <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:110px; height:80px;">
-                Picture<br>of Item
-            </div>
-            <div class="flex-grow-1 px-4"><p class="mb-0">Description</p></div>
-            <div class="d-flex align-items-center gap-3 flex-shrink-0 pe-5 position-relative z-index-top">
-                <p class="mb-0 fw-bold">$x3</p>
-                <div class="d-flex flex-column gap-2">
-                    <a class="btn btn-light border rounded-pill" href="checkout.html">
-                        Buy Now
-                    </a>
-                    <button class="btn btn-light border rounded-pill add-to-cart-btn">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-            <!-- added a remove-btn class for JS-->
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute top-0 end-0 m-2 z-index-top remove-btn" style="width:28px;height:28px;padding:0;line-height:1;">
-                &#x2715;
-            </button>
-        </div>
-
-        <!-- This the 4th wishlist item -->
-        <div class="wishlist-row d-flex align-items-center bg-secondary bg-opacity-25 rounded-3 p-3 mb-3 position-relative">
-            <a href="description.html" class="stretched-link"></a>
-            <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:110px; height:80px;">
-                Picture<br>of Item
-            </div>
-            <div class="flex-grow-1 px-4"><p class="mb-0">Description</p></div>
-            <div class="d-flex align-items-center gap-3 flex-shrink-0 pe-5 position-relative z-index-top">
-                <p class="mb-0 fw-bold">$x4</p>
-                <div class="d-flex flex-column gap-2">
-                    <a class="btn btn-light border rounded-pill" href="checkout.html">
-                        Buy Now
-                    </a>
-                    <button class="btn btn-light border rounded-pill add-to-cart-btn">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-            <!-- added a remove-btn class for JS-->
-            <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute top-0 end-0 m-2 z-index-top remove-btn" style="width:28px;height:28px;padding:0;line-height:1;">
-                &#x2715;
-            </button>
-        </div>
-        
-
+    <main class="flex-grow-1 py-4 px-4" id="wishlist-container">
+        <!-- Populated from localStorage by script below -->
     </main>
 
-    <footer class="bg-secondary bg-opacity-25 border-top py-2 px-4">
-        <a href="#" class="text-muted small me-4">Customer Service</a>
-        <a href="#" class="text-muted small me-4">Privacy Policy</a>
-        <a href="#" class="text-muted small">About US</a>
+    <footer class="py-3 px-4 mt-auto" style="background-color:#343A40;">
+        <a href="#" class="text-white text-decoration-none small me-4">Customer Service</a>
+        <a href="#" class="text-white text-decoration-none small me-4">Privacy Policy</a>
+        <a href="#" class="text-white text-decoration-none small">About US</a>
     </footer>
 
-    <!-- Listen for the user to press the x button-->
-    <script>
-    document.querySelectorAll('.remove-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(X) {
-            X.preventDefault();
-            X.stopPropagation();
-            this.closest('.wishlist-row').remove();
-        });
-    });
-    </script>
-
-    <!-- Adds the wishlisted item to the cart by adding a notification to the cart icon-->
-    <script>
-    document.querySelectorAll('.add-to-cart-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            //// Get the cart badge element from the navbar
-            const badge = document.getElementById('cartBadge');
-            // reveals the notification icon on cart
-            badge.classList.remove('d-none');
-            let count = parseInt(badge.textContent) || 0;
-            //// Increment the count by 1 and update the badge text
-            badge.textContent = count + 1;
-        });
-    });
-</script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function addToCart(name, price) {
+        const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        let cart = [];
+        try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+        const existing = cart.find(i => i.id === id);
+        if (existing) { existing.qty += 1; } else { cart.push({ id, name, price: parseFloat(price), qty: 1, image: '', alt: name }); }
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+
+      function renderWishlist() {
+        const list = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const container = document.getElementById('wishlist-container');
+        if (list.length === 0) {
+          container.innerHTML = '<p class="text-muted">Your wishlist is empty. <a href="catalog.html">Browse the catalog</a> to add items.</p>';
+          return;
+        }
+        container.innerHTML = list.map(item => `
+          <div class="wishlist-row d-flex align-items-center bg-secondary bg-opacity-25 rounded-3 p-3 mb-3 position-relative">
+            <a href="${item.href}" class="stretched-link"></a>
+            <div class="bg-light border rounded d-flex justify-content-center align-items-center text-center flex-shrink-0" style="width:110px; height:80px; font-size:1rem;">
+              Picture<br>of Item
+            </div>
+            <div class="flex-grow-1 px-4">
+              <p class="mb-0 fw-semibold">${item.name}</p>
+              <p class="mb-0 text-muted small">${item.label || ''}</p>
+            </div>
+            <div class="d-flex align-items-center gap-3 flex-shrink-0 pe-5 position-relative z-index-top">
+              <p class="mb-0 fw-bold">${item.price}</p>
+              <div class="d-flex flex-column gap-2">
+                <a class="btn btn-light border rounded-pill" href="checkout.html">Buy Now</a>
+                <button class="btn btn-light border rounded-pill add-to-cart-btn">Add to Cart</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle position-absolute top-0 end-0 m-2 z-index-top remove-btn" data-name="${item.name}" style="width:28px;height:28px;padding:0;line-height:1;">
+              &#x2715;
+            </button>
+          </div>`).join('');
+
+        // Remove button — deletes from localStorage and re-renders
+        container.querySelectorAll('.remove-btn').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            let list = JSON.parse(localStorage.getItem('wishlist')) || [];
+            list = list.filter(i => i.name !== this.dataset.name);
+            localStorage.setItem('wishlist', JSON.stringify(list));
+            renderWishlist();
+          });
+        });
+
+        // Add to cart
+        container.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const row = this.closest('.wishlist-row');
+            const name = row.querySelector('.fw-semibold')?.textContent.trim();
+            const priceRaw = row.querySelector('.fw-bold')?.textContent.trim();
+            const price = parseFloat(priceRaw.replace(/[^0-9.]/g, ''));
+            if (name) addToCart(name, price);
+            const badge = document.getElementById('cartBadge');
+            badge.classList.remove('d-none');
+            let cart = [];
+            try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+            badge.textContent = cart.reduce((sum, i) => sum + i.qty, 0);
+          });
+        });
+      }
+
+      renderWishlist();
+    </script>
 </body>
 </html>

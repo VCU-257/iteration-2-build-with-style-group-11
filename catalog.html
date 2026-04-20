@@ -302,6 +302,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    function addToCart(name, price) {
+      const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      let cart = [];
+      try { cart = JSON.parse(localStorage.getItem('cart')) || []; } catch {}
+      const existing = cart.find(i => i.id === id);
+      if (existing) { existing.qty += 1; } else { cart.push({ id, name, price: parseFloat(price), qty: 1, image: '', alt: name }); }
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
     // To add a new product, just add an object to this array.
     const products = [
       {
@@ -391,7 +400,7 @@
                 </div>
               </div>
               <div class="card-footer bg-white border-top-0 p-2">
-                <button class="btn btn-cart w-100">
+                <button class="btn btn-cart w-100" data-name="${p.name}" data-price="${p.price}">
                   <i class="bi bi-bag-heart-fill me-1"></i>Add to Cart
                 </button>
               </div>
@@ -455,6 +464,38 @@
 
     // Initial render
     renderCards(products);
+
+    // Save clicked product to recentlyViewed in localStorage
+    document.getElementById('productGrid').addEventListener('click', function(e) {
+      // Handle Add to Cart button first
+      const cartBtn = e.target.closest('.btn-cart');
+      if (cartBtn) {
+        e.preventDefault();
+        addToCart(cartBtn.dataset.name, cartBtn.dataset.price);
+        cartBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Added!';
+        setTimeout(() => { cartBtn.innerHTML = '<i class="bi bi-bag-heart-fill me-1"></i>Add to Cart'; }, 1500);
+        return;
+      }
+      const card = e.target.closest('a.product-card');
+      if (!card) return;
+      const cardTitle = card.querySelector('.card-title')?.textContent.trim();
+      const product = products.find(p => p.name === cardTitle);
+      if (!product) return;
+      const item = {
+        name:  product.name,
+        price: '$' + product.price.toFixed(2),
+        label: product.label,
+        href:  product.link
+      };
+      let recent = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
+      recent = recent.filter(i => i.name !== item.name); // remove duplicate
+      recent.unshift(item);                               // add to front
+      recent = recent.slice(0, 10);                      // keep max 10
+      localStorage.setItem('recentlyViewed', JSON.stringify(recent));
+
+      // Save full product data for description.html to consume
+      localStorage.setItem('selectedProduct', JSON.stringify(product));
+    });
   </script>
 </body>
 </html>
