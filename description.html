@@ -114,7 +114,7 @@
       <a class="btn btn-success" href="checkout.html">Buy Now</a>
       <!-- Added a ID to the Add Wishlist for JS -->
       <button class="btn btn-outline-secondary" id="wishlistBtn">Add to Wishlist</button>
-      <a class="btn btn-outline-secondary" href="compare.html">Compare</a>
+      <button class="btn btn-outline-secondary" id="compareBtn">Compare</button>
     </div>
 
     <div class="card">
@@ -216,6 +216,22 @@
     let count = parseInt(badge.textContent) || 0;
     // Increment the count by 1 and update the badge text
     badge.textContent = count + 1;
+  });
+
+  // Compare button — add to compareList (max 4) then navigate
+  document.getElementById('compareBtn').addEventListener('click', function() {
+    const product = JSON.parse(localStorage.getItem('selectedProduct'));
+    if (!product) { window.location.href = 'compare.html'; return; }
+    let compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+    if (!compareList.find(p => p.name === product.name)) {
+      if (compareList.length >= 4) {
+        alert('Maximum 4 items can be compared. Remove one from the compare page first.');
+        return;
+      }
+      compareList.push(product);
+      localStorage.setItem('compareList', JSON.stringify(compareList));
+    }
+    window.location.href = 'compare.html';
   });
 
   // Wishlist button toggle on/off
