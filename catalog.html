@@ -474,6 +474,9 @@
       recent.unshift(item);                               // add to front
       recent = recent.slice(0, 10);                      // keep max 10
       localStorage.setItem('recentlyViewed', JSON.stringify(recent));
+
+      // Save full product data for description.html to consume
+      localStorage.setItem('selectedProduct', JSON.stringify(product));
     });
   </script>
 </body>

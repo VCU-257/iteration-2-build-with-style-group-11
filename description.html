@@ -86,21 +86,21 @@
     </div>
 
     <div class="d-flex justify-content-between mb-3">
-      <h4>Item Name</h4>
-      <h4>$x</h4>
+      <h4 id="item-name">Item Name</h4>
+      <h4 id="item-price">$x</h4>
     </div>
 
     <div class="card mb-3">
       <div class="card-header">Description</div>
       <div class="card-body">
-        <p>This is the item description.</p>
+        <p id="item-description">This is the item description.</p>
       </div>
     </div>
 
     <div class="card mb-3">
       <div class="card-header">Specifications</div>
       <div class="card-body">
-        <ul>
+        <ul id="item-specs">
           <li>Spec 1</li>
           <li>Spec 2</li>
           <li>Spec 3</li>
@@ -119,7 +119,7 @@
 
     <div class="card">
       <div class="card-header">Reviews</div>
-        <div class="card-body">
+        <div class="card-body" id="item-reviews">
           <p>No reviews yet.</p>
         </div>
       </div>
@@ -149,6 +149,59 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // Populate page from selectedProduct saved by catalog.html
+  const deviceLabels = { pc: 'PC', playstation: 'PlayStation', xbox: 'Xbox', nintendo: 'Nintendo Switch', mobile: 'Mobile' };
+  const compatLabels = { wired: 'Wired', wireless: 'Wireless', bluetooth: 'Bluetooth', 'usb-c': 'USB-C', 'usb-a': 'USB-A' };
+
+  function starsHTML(rating) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i)            html += '<i class="bi bi-star-fill" style="color:#058531;"></i>';
+      else if (rating >= i - 0.5) html += '<i class="bi bi-star-half" style="color:#058531;"></i>';
+      else                        html += '<i class="bi bi-star" style="color:#058531;"></i>';
+    }
+    return html;
+  }
+
+  const product = JSON.parse(localStorage.getItem('selectedProduct'));
+  if (product) {
+    // Name, price, page title
+    document.getElementById('item-name').textContent = product.name;
+    document.getElementById('item-price').textContent = '$' + product.price.toFixed(2);
+    document.title = product.name;
+
+    // Description
+    document.getElementById('item-description').textContent = product.label;
+
+    // Specs: devices + compats
+    const specs = [
+      ...product.devices.map(d => 'Device: ' + (deviceLabels[d] || d)),
+      ...product.compats.map(c => 'Compatibility: ' + (compatLabels[c] || c))
+    ];
+    document.getElementById('item-specs').innerHTML = specs.map(s => `<li>${s}</li>`).join('');
+
+    // Reviews: one review matching the rating
+    const reviewTemplates = {
+      5:   '"Absolutely perfect — best purchase I\'ve made. Couldn\'t be happier."',
+      4.5: '"Almost flawless, minor packaging issue but the product itself is excellent."',
+      4:   '"Really solid product, does exactly what it says. Would recommend."',
+      3.5: '"Pretty good overall, a few small quirks but nothing deal-breaking."',
+      3:   '"Decent for the price, meets expectations but nothing outstanding."',
+      2.5: '"Mixed feelings — some things work well, others not so much."',
+      2:   '"Below average, had some issues out of the box."',
+      1:   '"Very disappointing, did not meet expectations at all."'
+    };
+    const reviewText = reviewTemplates[product.rating] || reviewTemplates[3];
+    document.getElementById('item-reviews').innerHTML = `
+      <div class="mb-1">
+        <strong>Verified Buyer</strong>
+        <div class="my-1">${starsHTML(product.rating)}</div>
+        <p class="mb-0">${reviewText}</p>
+      </div>`;
+  }
+</script>
 
 <script>
   // Cart badge id Get linked to this
