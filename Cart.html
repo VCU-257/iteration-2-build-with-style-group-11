@@ -16,10 +16,13 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg app-navbar navbar-dark">
   <div class="container-fluid">
-    <div class="navbar-collapse">
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMain">
       <ul class="navbar-nav me-auto mb-0">
         <li class="nav-item">
-          <a class="nav-link active" href="index.html">HOME</a>
+          <a class="nav-link" href="index.html">HOME</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="catalog.html">CATALOG</a>
@@ -31,7 +34,7 @@
           <a class="nav-link" href="deals.html">DEALS</a>
         </li>
       </ul>
-      <div class="d-flex align-items-center gap-2">
+      <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
         <div class="input-group">
           <button class="btn btn-outline-secondary">
             <i class="bi bi-search"></i>
@@ -62,18 +65,18 @@
 
     <div id="cartAlertHost" class="mb-3" aria-live="polite" aria-atomic="true"></div>
 
-    <table class="table bg-white">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th class="text-end">Subtotal</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="cartTbody"></tbody>
-    </table>
+    <div class="table-responsive cart-table-responsive">
+        <table class="table bg-white align-middle mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+            </thead>
+            <tbody id="cartTbody"></tbody>
+        </table>
+    </div>
 
     <div class="row g-3 align-items-center">
         <div class="col-12 col-md">
