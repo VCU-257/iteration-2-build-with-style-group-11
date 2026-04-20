@@ -151,11 +151,13 @@
         col.className = 'col-12 col-lg-3 compare-card';
         col.innerHTML = `
           <div class="card h-100">
-            <div class="ratio ratio-16x9 bg-secondary">
+            <a class="ratio ratio-16x9 bg-secondary d-block item-link" data-name="${product.name}" href="${product.link}" style="cursor:pointer;">
               <img src="" alt="${product.name}" class="img-thumbnail w-100 h-100 object-fit-cover">
-            </div>
+            </a>
             <div class="card-body">
-              <h6 class="card-title">${product.name}</h6>
+              <h6 class="card-title">
+                <a href="${product.link}" class="text-decoration-none text-dark item-link" data-name="${product.name}">${product.name}</a>
+              </h6>
               <p class="card-text small text-muted">${product.label}</p>
               <p class="card-text fw-bold">$${product.price.toFixed(2)}</p>
               <hr>
@@ -165,7 +167,7 @@
               </ul>
               <hr>
               <h6>Reviews</h6>
-              <div class="small">${starsHTML(product.rating)} (${product.rating}/5)</div>
+              <a href="review.html" class="small text-decoration-none review-link" data-name="${product.name}">${starsHTML(product.rating)} (${product.rating}/5)</a>
               <hr>
               <div class="d-flex flex-column gap-2 mt-2">
                 <a class="btn btn-primary btn-sm" href="checkout.html">
@@ -230,6 +232,26 @@
             this.innerHTML = '<i class="bi bi-heart me-1"></i> Wishlist';
           }
           localStorage.setItem('wishlist', JSON.stringify(list));
+        });
+      });
+
+      // Item link handlers — save selectedProduct before navigating to description
+      grid.querySelectorAll('.item-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const name = this.dataset.name;
+          const compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+          const product = compareList.find(p => p.name === name);
+          if (product) localStorage.setItem('selectedProduct', JSON.stringify(product));
+        });
+      });
+
+      // Review link handlers — save selectedProduct before navigating to description#reviews
+      grid.querySelectorAll('.review-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const name = this.dataset.name;
+          const compareList = JSON.parse(localStorage.getItem('compareList')) || [];
+          const product = compareList.find(p => p.name === name);
+          if (product) localStorage.setItem('selectedProduct', JSON.stringify(product));
         });
       });
 
